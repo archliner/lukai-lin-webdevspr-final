@@ -6,11 +6,11 @@ function requestBookListByTitle() {
     }
 }
 
-function receiveBookListByTitle(bookList, title) {
+function receiveBookListByTitle(bookList) {
     return {
         type: "RECEIVE_SEARCH_BOOK_TITLE",
-        bookList,
-        title
+        bookList
+        // title
     }
 }
 
@@ -83,30 +83,43 @@ function addReviewSuccess() {
 
 
 
+// export function searchByTitle(request) {
+//     return function(dispatch) {
+//         dispatch(requestBookListByTitle());
+//         return Axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${request.title}&key=AIzaSyA7DRYhCRLkAgG0pSK7lspzE_T6qP_kdNQ`)
+//             .then(response => {
+//                 console.log('receive books')
+//                 return response.data.items.map(item => item.volumeInfo);
+//             })
+//             .then(info => dispatch(receiveBookListByTitle(info, request.title)),
+//                 error => console.log('An error occurred.', error)
+//             );
+//     }
+// }
+//
+// export function searchByAuthors(request) {
+//     return function(dispatch) {
+//         dispatch(requestBookListByAuthor());
+//         return Axios.get(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${request.authors}&key=AIzaSyA7DRYhCRLkAgG0pSK7lspzE_T6qP_kdNQ`)
+//             .then(response => {
+//                 return response.data.items.map(item => item.volumeInfo);
+//             })
+//             .then(info => dispatch(receiveBookListByAuthor(info, request.authors)),
+//                 error => console.log('An error occurred.', error)
+//             );
+//     }
+// }
+
 export function searchByTitle(request) {
     return function(dispatch) {
         dispatch(requestBookListByTitle());
-        return Axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${request.title}&key=AIzaSyA7DRYhCRLkAgG0pSK7lspzE_T6qP_kdNQ`) 
+        return Axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=playlist&maxResults=25&q=${request.keyword}&key=AIzaSyCACcXftmROEAKdGIyTOxUunFO0_2wlkxU`)
             .then(response => {
-                console.log('receive books')
-                return response.data.items.map(item => item.volumeInfo);
+                return response.data.items;
             })
-            .then(info => dispatch(receiveBookListByTitle(info, request.title)),
-                error => console.log('An error occurred.', error) 
-            );
-    }
-}
-
-export function searchByAuthors(request) {
-    return function(dispatch) {
-        dispatch(requestBookListByAuthor());
-        return Axios.get(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${request.authors}&key=AIzaSyA7DRYhCRLkAgG0pSK7lspzE_T6qP_kdNQ`) 
-            .then(response => {
-                return response.data.items.map(item => item.volumeInfo);
-            })
-            .then(info => dispatch(receiveBookListByAuthor(info, request.authors)),
-                error => console.log('An error occurred.', error) 
-            );
+            .then(info => dispatch(receiveBookListByTitle(info)),
+                error => console.log('An error occurred.', error)
+                );
     }
 }
 
