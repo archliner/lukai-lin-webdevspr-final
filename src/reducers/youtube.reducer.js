@@ -79,7 +79,8 @@ function youtubeError(state = '', action) {
 
 function youtubeRedirect(state = {
     route: '',
-    post: {}
+    post: {},
+    reviewId: ''
 }, action) {
     switch (action.type) {
         case "ADD_POST_SUCCESS":
@@ -95,6 +96,19 @@ function youtubeRedirect(state = {
                 route: '/youtube/detail',
                 post: action.post
             });
+        case "DELETE_POST_SUCCESS":
+            return Object.assign({}, state, {
+                route: '/youtube',
+            });
+        case "EDIT_REVIEW_SUCCESS":
+            return Object.assign({}, state, {
+                route: '/youtube/detail',
+            });
+        case "REDIRECT_TO_EDIT":
+            return Object.assign({}, state, {
+                route: '/youtube/detail/editcomment',
+                reviewId: action.reviewId
+            }); 
         default:
             return Object.assign({}, state, {
                 route: '',

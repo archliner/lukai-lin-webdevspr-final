@@ -104,7 +104,7 @@ router.put("/:id", authParser, async (req, res) => {
   }
 });
 
-router.delete(":/id", authParser, async (req, res) => {
+router.delete("/:id", authParser, async (req, res) => {
   try {
     const id = req.params.id;
     let entry = await ReviewModel.findById(id).exec();
@@ -128,6 +128,7 @@ router.delete(":/id", authParser, async (req, res) => {
           return res.status(403).send("Username not matched");
         }
 
+        console.log('start deleting')
         return ReviewModel.findByIdAndDelete(id, { useFindAndModify: false })
           .exec()
           .then(
