@@ -88,7 +88,7 @@ function youtubeRedirect(state = {
             });
         case "ADD_REVIEW_SUCCESS":
             return Object.assign({}, state, {
-                route: '/youtube/detail',
+                route: '/youtube',
             });
         case "RECEIVE_POST_DETAIL_SUCCESS":
             return Object.assign({}, state, {

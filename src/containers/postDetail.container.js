@@ -30,14 +30,24 @@ class PostDetail extends React.Component {
     handleSubmit(event) {
         this.props.addReview(this.state);
         // this.props.postDetail(this.props.youtubeRedirect.post._id)
-        event.preventDefault();
+        // event.preventDefault();
     }
 
+    _handleAddComment() {
+        this.props.addReview(this.state);
+    }
+
+
     _addComment() {
+        const user = this.props.routeState.user;
+        if (!user) {
+            return (<h5>You can login to add a comment</h5>)
+        }
 
         return (
             <div>
-                <form onSubmit={(e) => this.handleSubmit(e)}>
+                {/* <form onSubmit={(e) => this.handleSubmit(e)}> */}
+                <form>
                     {/* {error} */}
                     <label> Rate:
                         <input type="text"
@@ -49,7 +59,7 @@ class PostDetail extends React.Component {
                             disabled={this.props.inFlight}
                             value={this.state.comment}
                             onChange={(e) => this.handleChange(e, 'comment')}/> </label>
-                    <input type="submit" value="Submit" disabled={this.props.inFlight}/>
+                    <input type="button" value="Add" onClick={() => this._handleAddComment()} disabled={this.props.inFlight}/>
                 </form>
             </div>
         );
@@ -66,12 +76,12 @@ class PostDetail extends React.Component {
                 <td>{review.rate}</td>
                 <td>{review.username}</td>
                 <td>{new Date(review.createTime).toTimeString()}</td>
-                {/* <td><input type='button' value='Detail' onClick={() => this._postDetail(post._id)}/> </td> */}
+                {/* <td><input type='button' value='Edit' onClick={() => this._editReview(review._id)}/> </td>
+                <td><input type='button' value='Delete' onClick={() => this._deleteReview(review._id)}/> </td> */}
             </tr>));
         return (
             <div>
                 <h2>Reviews</h2>
-                {this._addComment()}
                 <table>
                     <thead>
                     <tr>
@@ -79,7 +89,8 @@ class PostDetail extends React.Component {
                         <th>Rate</th>
                         <th>Reviewer</th>
                         <th>Date</th>
-                        {/* <th></th> */}
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -120,6 +131,7 @@ class PostDetail extends React.Component {
         return (
             <div>
                 {this._renderDetail()}
+                {this._addComment()}
                 {this._renderReviews()}
             </div>
         );

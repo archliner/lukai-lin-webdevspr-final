@@ -41,6 +41,23 @@ router.post("/admin", async (req, res) => {
   );
 });
 
+// router.post("/authenticate", async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+//     let user = (await UserModel.findOne({ username: username })).exec();
+//     user.comparePassword(password, (error, match) => {
+//       if (match) {
+//         req.session.isAdmin = user.isAdmin; 
+//         req.session.username = username;
+//         return res.status(200).send({ username });
+//       }
+//       return res.status(400).send("The password does not match");
+//     });
+//   } catch (error) {
+//     res.status(404).send(error)
+//   }
+// });
+
 router.post("/authenticate", function (req, res) {
   const { username, password } = req.body;
   UserModel.findOne({ username: username })
@@ -49,6 +66,7 @@ router.post("/authenticate", function (req, res) {
       user.comparePassword(password, (error, match) => {
         if (match) {
           req.session.username = username;
+          req.session.isAdmin = user.isAdmin;
           return res.status(200).send({ username });
         }
         return res.status(400).send("The password does not match");
@@ -58,7 +76,7 @@ router.post("/authenticate", function (req, res) {
 });
 
 router.get("/loggedIn", authParser, function (req, res) {
-  return res.status(200).send(req.username);
+  return res.status(200).json({username: req.username, isAdmin: req.isAdmin});
 });
 
 router.post('/logout', logoutParser, function(req, res) {

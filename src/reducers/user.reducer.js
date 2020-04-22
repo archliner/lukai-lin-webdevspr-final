@@ -35,12 +35,12 @@ function error(state = '', action) {
 
 function routeState(state = {
     state: 'LOADING',
-    username: ''
+    user: ''
 }, action) {
     switch (action.type) {
         case 'CHECK_LOGGEDIN_ATTEMPT':
         case 'CHECK_LOGGEDIN_SUCCESS':
-            return {state: 'LOGGEDIN', username: action.username};
+            return {state: 'LOGGEDIN', user: action.user};
         case 'CHECK_LOGGEDIN_FAILURE':
             return {state: 'LOGGEDOUT'}
         default:

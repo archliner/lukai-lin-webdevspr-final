@@ -74,10 +74,10 @@ function receiveReview(review) {
     }
 }
 
-function addReviewSuccess(post) {
+function addReviewSuccess() {
+    console.log('dispatch!')
     return {
         type: "ADD_REVIEW_SUCCESS",
-        post
     }
 }
 
@@ -162,14 +162,12 @@ export function getReviewsByPlaylistId(id) {
 export function addReview(comment) {
     return function (dispatch) {
         return Axios.post('/api/review/', comment)
-            .then((response) => {
-                return Axios.get(`/api/playlist/${response.data.playlist_Id}`)
-                .then(response => {
-                    dispatch(receivePostDetail(response.data[0]))
-                },
-                    error => console.log('An error occurred.', error)
-                );
-            },
+            .then(() => Axios.get(`/api/review`),
                 error => console.log('An error occurred.', error))
+            .then(response => {
+                dispatch(receiveReview(response.data))
+            },
+            error => console.log('An error occurred.', error)
+        )
     }
 }

@@ -16,7 +16,11 @@ class Profile extends React.Component {
 
     render() {
         const status = this.props.routeState.state;
-        const username = this.props.routeState.username;
+        const user = this.props.routeState.user;
+        var username = '';
+        if (user) {
+            username = user.username;
+        }
         var profile = "";
         if (status === "LOGGEDIN") {
             profile = <h3>This is profile of {username}</h3>

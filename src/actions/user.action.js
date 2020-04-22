@@ -65,10 +65,10 @@ function checkLoggedInAttempt() {
     }
 }
 
-function checkLoggedInSuccess (username) {
+function checkLoggedInSuccess (user) {
     return {
         type: "CHECK_LOGGEDIN_SUCCESS",
-        username
+        user
     }
 }
 
