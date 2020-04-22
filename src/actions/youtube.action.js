@@ -2,14 +2,14 @@ import Axios from 'axios'
 
 function requestBookListByTitle() {
     return {
-        type: "REQUEST_SEARCH_BOOK_TITLE"
+        type: "REQUEST_PLAYLIST_TITLE"
     }
 }
 
-function receiveBookListByTitle(bookList) {
+function receiveBookListByTitle(playList) {
     return {
-        type: "RECEIVE_SEARCH_BOOK_TITLE",
-        bookList
+        type: "RECEIVE_PLAYLIST_TITLE",
+        playList
         // title
     }
 }

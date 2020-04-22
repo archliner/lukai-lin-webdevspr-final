@@ -37,7 +37,7 @@ class Search extends React.Component {
         //     books.push({title: book.title, authors: book.authors})
         // ));
         
-        const youtubeSearchRows = this.props.searchList.map((playlist) => (
+        const youtubeSearchRows = this.props.searchList.playList.map((playlist) => (
             <tr key={playlist.id.playlistId}>
                 <td>{playlist.snippet.title}</td>
                 <td>{playlist.snippet.description}</td>
