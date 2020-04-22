@@ -67,6 +67,12 @@ function receivePostDetail(post) {
     }
 }
 
+function deletePostSuccess() {
+    return {
+        type: "DELETE_POST_SUCCESS",
+    }
+}
+
 function receiveReview(review) {
     return {
         type: "RECEIVE_REVIEW_SUCCESS",
@@ -81,7 +87,18 @@ function addReviewSuccess() {
     }
 }
 
+function redirectToEdit(reviewId) {
+    return {
+        type: "REDIRECT_TO_EDIT",
+        reviewId
+    }
+}
 
+function editReviewSuccess() {
+    return {
+        type: "EDIT_REVIEW_SUCCESS",
+    }
+}
 
 export function searchByTitle(request) {
     return function(dispatch) {
@@ -120,15 +137,6 @@ export function fetchPosts() {
     }
 }
 
-// export function fetchPostById(id) {
-//     return function(dispatch) {
-//         return Axios.get(`/api/playlist${id}`)
-//             .then(response => dispatch(receivePostsList(response.data)),
-//             error => console.log('An error occurred.', error)
-//             );
-//     }
-// }
-
 export function addPost(post) {
     return function (dispatch) {
         dispatch(addPostAttempt());
@@ -159,14 +167,47 @@ export function getReviewsByPlaylistId(id) {
     }
 }
 
-export function addReview(comment) {
+export function addReview(review, playlistId) {
     return function (dispatch) {
-        return Axios.post('/api/review/', comment)
-            .then(() => Axios.get(`/api/review`),
+        return Axios.post('/api/review/', review)
+            .then(() => Axios.get(`/api/review/${playlistId}`),
                 error => console.log('An error occurred.', error))
-            .then(response => {
-                dispatch(receiveReview(response.data))
-            },
+            .then(response => dispatch(receiveReview(response.data)),
+                error => console.log('An error occurred.', error)
+        )
+    }
+}
+
+export function rediectToEdit(reviewId) {
+    return function(dispatch) {
+        dispatch(redirectToEdit(reviewId));
+    }
+}
+
+export function editReview(review) {
+    return function(dispatch) {
+        return Axios.put(`/api/review/${review._id}`, review)
+            .then(response => dispatch(editReviewSuccess(response.data)),
+            error => console.log('An error occurred.', error)
+        );
+    }
+}
+
+export function deleteReview(reviewId, playlistId) {
+    return function(dispatch) {
+        return Axios.delete(`/api/review/${reviewId}`)
+            .then(() => Axios.get(`/api/review/${playlistId}`),
+                error => console.log('An error occurred.', error))
+            .then(response => dispatch(receiveReview(response.data)),
+                error => console.log('An error occurred.', error)
+        )
+    }
+}
+
+export function deletePost(postId) {
+    return function(dispatch) {
+        return Axios.delete(`/api/playlist/${postId}`)
+            .then(response => dispatch(deletePostSuccess()),
             error => console.log('An error occurred.', error)
         )
     }

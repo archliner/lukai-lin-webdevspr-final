@@ -19,7 +19,7 @@ import AddPost from "./containers/addPost.containser";
 import PostDetail from './containers/postDetail.container';
 import Profile from "./containers/profile.container";
 import Search from "./containers/search.container";
-
+import EditReview from "./containers/editReview.container";
 
 // const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
 
@@ -42,6 +42,7 @@ ReactDOM.render(
                 <Route exact path="/youtube" component={LoggedInComponent(Youtube)}/>
                 <Route exact path="/youtube/addpost" component={LoggedInComponent(AddPost)}/>
                 <Route exact path="/youtube/detail" component={LoggedInComponent(PostDetail)}/>
+                <Route exact path="/youtube/detail/editcomment" component={LoggedInComponent(EditReview)}/>
                 <Route path="/profile" component={LoggedInComponent(Profile)}/>
                 <Route path="/login" component={UserLogin}/>
                 <Route path="/register" component={Register}/>

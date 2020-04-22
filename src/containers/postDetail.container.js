@@ -2,9 +2,8 @@ import React from "react";
 import {connect} from 'react-redux';
 import {withRouter} from "react-router";
 import {Redirect} from "react-router";
-import queryString from 'query-string';
 import {checkLoggedIn, getUserByUsername} from '../actions/user.action';
-import {postDetail, getReviewsByPlaylistId, addReview} from '../actions/youtube.action';
+import {postDetail, getReviewsByPlaylistId, addReview, rediectToEdit, deleteReview, deletePost} from '../actions/youtube.action';
 
 class PostDetail extends React.Component {
     constructor() {
@@ -27,26 +26,29 @@ class PostDetail extends React.Component {
         this.setState({[value]: event.target.value || ''});
     }
 
-    handleSubmit(event) {
-        this.props.addReview(this.state);
-        // this.props.postDetail(this.props.youtubeRedirect.post._id)
-        // event.preventDefault();
+    _handleAddComment(post) {
+        this.props.addReview(this.state, post._id);
     }
 
-    _handleAddComment() {
-        this.props.addReview(this.state);
+    _editReview(reviewId) {
+        this.props.rediectToEdit(reviewId);
     }
 
+    _deleteReview(reviewId, post) {
+        this.props.deleteReview(reviewId, post._id);
+    }
 
-    _addComment() {
-        const user = this.props.routeState.user;
+    _deletePost(postId) {
+        this.props.deletePost(postId)
+    }
+
+    _addComment(user, post) {
         if (!user) {
             return (<h5>You can login to add a comment</h5>)
         }
 
         return (
             <div>
-                {/* <form onSubmit={(e) => this.handleSubmit(e)}> */}
                 <form>
                     {/* {error} */}
                     <label> Rate:
@@ -59,38 +61,51 @@ class PostDetail extends React.Component {
                             disabled={this.props.inFlight}
                             value={this.state.comment}
                             onChange={(e) => this.handleChange(e, 'comment')}/> </label>
-                    <input type="button" value="Add" onClick={() => this._handleAddComment()} disabled={this.props.inFlight}/>
+                    <input type="button" value="Add" onClick={() => this._handleAddComment(post)} disabled={this.props.inFlight}/>
                 </form>
             </div>
         );
     }
 
-    _renderReviews() {
-        const reviews = this.props.reviews;
+    _renderReviews(user, post, reviews) {
+        var reviewRows = '';
         if (!reviews) {
             return (<div>Loading reviews....</div>)
         }
-        const reviewRows = this.props.reviews.map(review => (
+        var editDeleteButton = () => {};
+        editDeleteButton = (review) => {
+            if (user) {
+                if (review.username === user.username || user.username === post.sharedUser || user.isAdmin) {
+                    return (<div>
+                        <input type='button' value='Edit' onClick={() => this._editReview(review._id)}/>
+                        <input type='button' value='Delete' onClick={() => this._deleteReview(review._id, post)}/>
+                    </div>);
+                }
+            }
+        }
+
+        reviewRows = this.props.reviews.map(review => (
             <tr key={review._id}>
                 <td>{review.comment}</td>
                 <td>{review.rate}</td>
                 <td>{review.username}</td>
                 <td>{new Date(review.createTime).toTimeString()}</td>
-                {/* <td><input type='button' value='Edit' onClick={() => this._editReview(review._id)}/> </td>
-                <td><input type='button' value='Delete' onClick={() => this._deleteReview(review._id)}/> </td> */}
+                <td>{new Date(review.editTime).toTimeString()}</td>
+                {editDeleteButton(review)}
             </tr>));
+
         return (
             <div>
                 <h2>Reviews</h2>
+                {this._addComment(user, post)}
                 <table>
                     <thead>
                     <tr>
                         <th>Comment</th>
                         <th>Rate</th>
                         <th>Reviewer</th>
-                        <th>Date</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>CreateTime</th>
+                        <th>EditTime</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -101,11 +116,21 @@ class PostDetail extends React.Component {
         )
     }
 
-    _renderDetail() {
-        const post = this.props.youtubeRedirect.post;
+    _renderDetail(post, user) {
+        // const post = this.props.youtubeRedirect.post;
         if (!post) {
             return <p>Loading...</p>
         }
+        var deleteButton = '';
+        // const user = this.props.routeState.user;
+        if (user) {
+            if (user.username === post.sharedUser || user.isAdmin) {
+                deleteButton = (
+                    <td><input type='button' value='Delete' onClick={() => this._deletePost(post._id)}/> </td>
+                )
+            }
+        }
+        
         const detail = (
             <ul>
                 <li>playlist: {post.playlistId}</li>
@@ -118,6 +143,7 @@ class PostDetail extends React.Component {
         return (
             <div>
                 <h1>Post Detail</h1>
+                {deleteButton}
                 {detail}
             </div>
         );
@@ -127,12 +153,13 @@ class PostDetail extends React.Component {
         if (this.props.youtubeRedirect.route) {
             return (<Redirect to={this.props.youtubeRedirect.route}/>)
         }
-
+        const user = this.props.routeState.user;
+        const reviews = this.props.reviews;
+        const post = this.props.youtubeRedirect.post;
         return (
             <div>
-                {this._renderDetail()}
-                {this._addComment()}
-                {this._renderReviews()}
+                {this._renderDetail(post, user)}
+                {this._renderReviews(user, post, reviews)}
             </div>
         );
     }
@@ -145,7 +172,10 @@ function mapDispatchToProps(dispatch, props) {
         getUserByUsername: (username) => dispatch(getUserByUsername(username)),
         postDetail: (id) => dispatch(postDetail(id)),
         getReviewsByPlaylistId: (id) => dispatch(getReviewsByPlaylistId(id)),
-        addReview: (review) => dispatch(addReview(review)),
+        addReview: (review, playlistId) => dispatch(addReview(review, playlistId)),
+        rediectToEdit: (reviewId) => dispatch(rediectToEdit(reviewId)),
+        deleteReview: (reviewId, playlistId) => dispatch(deleteReview(reviewId, playlistId)),
+        deletePost: (postId) => dispatch(deletePost(postId))
     }
 }
 
