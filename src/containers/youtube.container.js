@@ -3,11 +3,7 @@ import React from "react";
 import {connect} from 'react-redux';
 import {withRouter} from "react-router";
 import {Redirect} from "react-router";
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-  } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {checkLoggedIn, getUserByUsername} from '../actions/user.action';
 import {fetchPosts, postDetail} from '../actions/youtube.action';
 

@@ -1,8 +1,5 @@
 import Axios from "axios";
 import React from 'react';
-import {
-    Redirect
-} from "react-router-dom";
 
 export default function (RedirectComponent) {
     return class extends React.Component {
@@ -31,7 +28,7 @@ export default function (RedirectComponent) {
         }
 
         render() {
-            const {loading, redirect} = this.state;
+            const {loading} = this.state;
             if (loading) {
                 return (<h4>Loading...</h4>);
             }

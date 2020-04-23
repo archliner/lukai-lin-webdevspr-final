@@ -45,7 +45,7 @@ class Profile extends React.Component {
         let playlistHeader = ""
         if (followingPlaylists) {
             followingPlaylists = this.props.playlists.map((item, i) => {
-                return <li key = {i}>{item}</li>
+                return <li key={i}>{item}</li>
             });
             playlistHeader = "Following playlists"
         }

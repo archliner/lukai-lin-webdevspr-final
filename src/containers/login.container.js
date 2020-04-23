@@ -2,6 +2,12 @@ import React from "react";
 import {connect} from 'react-redux';
 import {clear, login, checkLoggedIn} from '../actions/user.action'
 import {Redirect} from "react-router";
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Container from 'react-bootstrap/Container';
 
 class UserLogin extends React.Component {
     constructor(props) {
@@ -36,20 +42,34 @@ class UserLogin extends React.Component {
 
         return (
             <div>
-                <form onSubmit={(e) => this.handleSubmit(e)}>
-                    {error}
-                    <label> Name:
-                        <input type="text"
-                            disabled={this.props.inFlight}
-                            value={this.state.username}
-                            onChange={(e) => this.handleChange(e, 'username')}/> </label>
-                    <label> Password:
-                        <input type="password"
-                            disabled={this.props.inFlight}
-                            value={this.state.password}
-                            onChange={(e) => this.handleChange(e, 'password')}/> </label>
-                    <input type="submit" value="Submit" disabled={this.props.inFlight}/>
-                </form>
+                <Jumbotron>
+                    <Container>
+                        <h2 className="text-center">Login</h2>
+                        <Form onSubmit={(e) => this.handleSubmit(e)} className="justify-content-md-center">
+                            <Form.Row className="justify-content-md-center">
+                                <Form.Group as={Col} controlId="formGridUsername" xs lg="4">
+                                <Form.Label>Username</Form.Label>
+                                <Form.Control type="text" placeholder="Enter Username" onChange={(e) => this.handleChange(e, 'username')}/>
+                                </Form.Group>
+                            </Form.Row>
+                            <Form.Row className="justify-content-md-center">
+                                <Form.Group as={Col} controlId="formGridPassword" xs lg="4">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control type="password" placeholder="Password" onChange={(e) => this.handleChange(e, 'password')}/>
+                                </Form.Group>
+                            </Form.Row>
+                            <br/>
+                            <Form.Group as={Row} className="justify-content-md-center">
+                                <Col xs lg="4" >
+                                    <Button block variant="primary" type="submit" disabled={this.props.inFlight}>
+                                        Log In
+                                    </Button>
+                                </Col>
+                            </Form.Group>
+                            {error}
+                        </Form>
+                    </Container>
+                </Jumbotron>
             </div>
         );
     }

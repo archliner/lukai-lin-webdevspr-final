@@ -3,6 +3,13 @@ import {connect} from 'react-redux';
 import {checkLoggedIn} from '../actions/user.action';
 import {searchByAuthors, searchByTitle, addPostWithPlaylistId} from '../actions/youtube.action';
 import {Redirect} from "react-router";
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Container from 'react-bootstrap/Container';
+import Table from 'react-bootstrap/Table';
 
 class Search extends React.Component {
     constructor(props) {
@@ -37,41 +44,48 @@ class Search extends React.Component {
       return <img src={imgUrl}/>
     }
 
-    // componentDidMount() {
-    //     this.props.clear();
-    //     this.props.checkLoggedIn();
-    // }
     _renderBookList() {
         if (!this.props.searchList || this.props.searchList.length === 0) {
             return null;
         }
-        const books = [];
-        // const list = this.props.searchList.bookList.map((book) => (
-        //     books.push({title: book.title, authors: book.authors})
-        // ));
         
         const youtubeSearchRows = this.props.searchList.playList.map((playlist) => (
             <tr key={playlist.id.playlistId}>
               <td>{this._getThumbnail(playlist.snippet.thumbnails)}</td>
                 <td align={"middle"}>{playlist.snippet.title}</td>
-                <td>{playlist.id.playlistId}</td>
+                <td><a href={"https://www.youtube.com/playlist?list=" + playlist.id.playlistId}>{playlist.snippet.title}</a></td>
                 <td><input type="button" value="Post this" onClick={() => this.handlePostClick("https://www.youtube.com/playlist?list=" + playlist.id.playlistId)}/></td>
             </tr>
             ));
         
         return (
-            <table>
+            <Table striped bordered hover responsive>
                 <thead>
                 <tr>
-                  <th>Playlist</th>
-                    <th>Title</th>
-                    <th>Playlist ID</th>
+                    <th style={{width: "40%"}}>Playlist</th>
+                    <th style={{width: "28%"}}>Title</th>
+                    <th style={{width: "15%"}}>Playlist Link</th>
+                    <th style={{width: "17%"}}>Post</th>
                 </tr>
                 </thead>
                 <tbody>
                     {youtubeSearchRows}
                 </tbody>
-            </table>)
+            </Table>
+
+            // <table>
+            //     <thead>
+            //     <tr>
+            //       <th>Playlist</th>
+            //         <th>Title</th>
+            //         <th>Playlist ID</th>
+            //     </tr>
+            //     </thead>
+            //     <tbody>
+            //         {youtubeSearchRows}
+            //     </tbody>
+            // </table>
+            )
 
     }
 
@@ -81,15 +95,36 @@ class Search extends React.Component {
         }
         return (
             <div>
-                <h3>Search Youtube</h3>
-                <form>
+                <Jumbotron>
+                    <Container>
+                        <h3 className="text-center">Search Youtube</h3>
+                        <Form className="justify-content-md-center">
+                            <Form.Row className="justify-content-md-center">
+                                <Form.Group as={Col} controlId="formGridKeyword" xs lg="4">
+                                    <Form.Label></Form.Label>
+                                    <Form.Control type="text" placeholder="Enter keyword" onChange={(e) => this.handleChange(e, 'keyword')}/>
+                                </Form.Group>
+                            </Form.Row>
+                            <br/>
+                            <Form.Group as={Row} className="justify-content-md-center">
+                                <Col xs lg="4" >
+                                    <Button block variant="primary" type="button" onClick={() => this.handleClick()}>
+                                        Search
+                                    </Button>
+                                </Col>
+                            </Form.Group>
+                            </Form>
+                    </Container>
+                </Jumbotron>
+                
+                {/* <form>
                     <label> Keyword:
                         <input type="text"
                             disabled={this.props.inFlight}
                             value={this.state.keyword}
                             onChange={(e) => this.handleChange(e, 'keyword')}/> </label>
                     <input type="button" value="Submit" onClick={() => this.handleClick()} disabled={this.props.inFlight}/>
-                </form>
+                </form> */}
                 <div>{this._renderBookList()}</div>
             </div>
         );

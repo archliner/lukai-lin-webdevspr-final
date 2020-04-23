@@ -14,20 +14,6 @@ function receiveBookListByTitle(playList) {
     }
 }
 
-function requestBookListByAuthor() {
-    return {
-        type: "REQUEST_SEARCH_BOOK_AUTHOR"
-    }
-}
-
-function receiveBookListByAuthor(bookList, authors) {
-    return {
-        type: "RECEIVE_SEARCH_BOOK_AUTHOR",
-        bookList,
-        authors
-    }
-}
-
 function loadingPosts() {
     return {
         type: "REQUEST_POSTS"
@@ -77,13 +63,6 @@ function receiveReview(review) {
     return {
         type: "RECEIVE_REVIEW_SUCCESS",
         review
-    }
-}
-
-function addReviewSuccess() {
-    console.log('dispatch!')
-    return {
-        type: "ADD_REVIEW_SUCCESS",
     }
 }
 
