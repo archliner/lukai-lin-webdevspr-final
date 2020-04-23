@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from 'react-redux';
 import {withRouter} from "react-router";
 import {Redirect} from "react-router";
+import StarRatings from "react-star-ratings";
 import {checkLoggedIn, getUserByUsername} from '../actions/user.action';
 import {postDetail, getReviewsByPlaylistId, addReview, 
     rediectToEdit, deleteReview, deletePost, followingPlaylist, unfollowPlaylist} from '../actions/youtube.action';
@@ -9,7 +10,7 @@ import {postDetail, getReviewsByPlaylistId, addReview,
 class PostDetail extends React.Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {rate:5};
     }
 
     componentDidMount() {
@@ -64,6 +65,13 @@ class PostDetail extends React.Component {
                             disabled={this.props.inFlight}
                             value={this.state.rate}
                             onChange={(e) => this.handleChange(e, 'rate')}/> </label>
+                    <StarRatings
+                        rating={this.state.rate}
+                        starRatedColor="red"
+                        changeRating={(newRating)=>this.setState({rate: newRating})}
+                        starDimension="20px"
+                        name="rating"
+                    />
                     <label> Comment:
                         <input type="text"
                             disabled={this.props.inFlight}

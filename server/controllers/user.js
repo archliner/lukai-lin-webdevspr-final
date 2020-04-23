@@ -91,7 +91,6 @@ router.put("/:username", async (req, res) => {
       followingPlaylists.push(req.body.following);
     }
     if (req.body.unfollowing) {
-      console.log('unfollowing: ' + req.body.unfollowing)
       for(var i = followingPlaylists.length - 1; i >= 0; i--) {
         if(followingPlaylists[i] == req.body.unfollowing) {
           console.log('start splice')
@@ -99,7 +98,6 @@ router.put("/:username", async (req, res) => {
         }
       }
     }
-    console.log('followinglist: ' + followingPlaylists)
     req.body.followingPlaylists = followingPlaylists;
     entry = await UserModel.findByIdAndUpdate(id, req.body).exec();
     res.status(200).send(entry);
@@ -108,6 +106,19 @@ router.put("/:username", async (req, res) => {
   }
 });
 
+// get a user's following playlists
+router.get("/:username/followinglists", async (req, res) => {
+  try {
+    const username = req.params.username;
+    let entry = await UserModel.findOne({ username: username }).exec();
+    if (!entry) {
+      return res.status(404).send("ID not found");
+    }
+    res.status(200).send(entry.followingPlaylists);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 router.get("/loggedIn", authParser, function (req, res) {
   return res.status(200).json({username: req.username, isAdmin: req.isAdmin});
