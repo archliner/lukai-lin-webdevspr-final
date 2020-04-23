@@ -2,6 +2,12 @@ import React from "react";
 import {connect} from 'react-redux';
 import {clear, register, validate} from '../actions/user.action'
 import {Redirect} from "react-router";
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Container from 'react-bootstrap/Container';
 
 class Register extends React.Component {
     constructor(props) {
@@ -45,34 +51,40 @@ class Register extends React.Component {
         }
 
         return (
-            <form onSubmit={(e) => this.handleSubmit(e)}>
-                {error}
-                <label> Name:
-                    <input type="text"
-                           disabled={this.props.inFlight}
-                           value={this.state.username}
-                           onChange={(e) => this.handleChange(e, 'username')}/> </label>
-                
-                <label> Password:
-                    <input type="password"
-                           disabled={this.props.inFlight}
-                           value={this.state.password}
-                           onChange={(e) => this.handleChange(e, 'password')}/> </label>
-                
-                <label> Validate Password:
-                    <input type="password"
-                           disabled={this.props.inFlight}
-                           value={this.state.validatePassword}
-                           onChange={(e) => this.handleChange(e, 'validatePassword')}/> </label>
-                
-                <label> Bio:
-                    <input type="text"
-                           disabled={this.props.inFlight}
-                           value={this.state.bio}
-                           onChange={(e) => this.handleChange(e, 'bio')}/> </label>
-                <br/>
-                <input type="submit" value="Submit" disabled={this.props.inFlight}/>
-            </form>
+            <Jumbotron>
+                <Container>
+                    <h2 className="text-center">Register</h2>
+                    <Form onSubmit={(e) => this.handleSubmit(e)} className="justify-content-md-center">
+                        <Form.Row className="justify-content-md-center">
+                            <Form.Group as={Col} controlId="formGridUsername" xs lg="4">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Username" onChange={(e) => this.handleChange(e, 'username')}/>
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row className="justify-content-md-center">
+                            <Form.Group as={Col} controlId="formGridPassword" xs lg="4">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" placeholder="Password" onChange={(e) => this.handleChange(e, 'password')}/>
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row className="justify-content-md-center">
+                            <Form.Group as={Col} controlId="formGridPassword" xs lg="4">
+                                <Form.Label>Validate Password</Form.Label>
+                                <Form.Control type="password" placeholder="Validate Password" onChange={(e) => this.handleChange(e, 'validatePassword')}/>
+                            </Form.Group>
+                        </Form.Row>
+                        <br/>
+                        <Form.Group as={Row} className="justify-content-md-center">
+                            <Col xs lg="4" >
+                                <Button block variant="primary" type="submit" disabled={this.props.inFlight}>
+                                    Register
+                                </Button>
+                            </Col>
+                        </Form.Group>
+                        <h3 className="text-center">{error}</h3>
+                    </Form>
+                </Container>
+            </Jumbotron>
         );
     }
 }

@@ -20,16 +20,8 @@ import PostDetail from './containers/postDetail.container';
 import Profile from "./containers/profile.container";
 import Search from "./containers/search.container";
 import EditReview from "./containers/editReview.container";
-// import 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css';
-
-// import "./index.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import TubeListNav from "./components/TubeListNav";
-// import Explore from "./components/pages/Explore";
-// import Profile from "./components/pages/Profile";
-// import Following from "./components/pages/Following";
-
-// const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
+import "./index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const userStore = createStore(
     reducers, 

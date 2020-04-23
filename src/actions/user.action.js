@@ -150,7 +150,7 @@ export function login(user) {
                 dispatch(loginSuccess(response.data.username))
                 dispatch(selectUser(response.data.username))
             },
-                error => dispatch(loginFailure(error.response.data))
+                error => dispatch(loginFailure(error.response.data.message))
             );
     }
 }

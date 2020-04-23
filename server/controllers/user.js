@@ -8,20 +8,25 @@ const logoutParser = require('../middleware/middleware_logout.middleware');
 
 // register
 router.post("/", async (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    return res
-      .status(404)
-      .send({ message: "Must include username AND password" });
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(404).send({ message: "Must include username AND password" });
+    }
+    let user = await (UserModel.findOne({ username: username })).exec();
+    if (user) {
+      return res.status(404).send({message: 'The user already exists, please use another username'})
+    }
+    return UserModel.create(req.body).then(
+      () => {
+        req.session.username = username;
+        return res.status(200).send({ username });
+      },
+      (error) => res.status(500).send(error)
+    );
+  } catch (error) {
+    res.status(404).send(error)
   }
-
-  return UserModel.create(req.body).then(
-    () => {
-      req.session.username = username;
-      return res.status(200).send({ username });
-    },
-    (error) => res.status(500).send(error)
-  );
 });
 
 // Create ADMIN user
@@ -42,40 +47,43 @@ router.post("/admin", async (req, res) => {
   );
 });
 
-// router.post("/authenticate", async (req, res) => {
-//   try {
-//     const { username, password } = req.body;
-//     let user = (await UserModel.findOne({ username: username })).exec();
-//     user.comparePassword(password, (error, match) => {
-//       if (match) {
-//         req.session.isAdmin = user.isAdmin; 
-//         req.session.username = username;
-//         return res.status(200).send({ username });
-//       }
-//       return res.status(400).send("The password does not match");
-//     });
-//   } catch (error) {
-//     res.status(404).send(error)
-//   }
-// });
+router.post("/authenticate", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    let user = await (UserModel.findOne({ username: username })).exec();
+    if (!user) {
+      res.status(404).send({message: 'The user does not exist, please register first'})
+    }
+    user.comparePassword(password, (error, match) => {
+      if (match) {
+        req.session.isAdmin = user.isAdmin; 
+        req.session.username = username;
+        return res.status(200).send({ username });
+      }
+      return res.status(400).send({message: "The password does not match with the record"});
+    });
+  } catch (error) {
+    res.status(404).send(error)
+  }
+});
 
 // login
-router.post("/authenticate", function (req, res) {
-  const { username, password } = req.body;
-  UserModel.findOne({ username: username })
-    .exec()
-    .then((user) => {
-      user.comparePassword(password, (error, match) => {
-        if (match) {
-          req.session.username = username;
-          req.session.isAdmin = user.isAdmin;
-          return res.status(200).send({ username });
-        }
-        return res.status(400).send("The password does not match");
-      });
-    })
-    .catch((error) => console.error(`Something went wrong: ${error}`));
-});
+// router.post("/authenticate", function (req, res) {
+//   const { username, password } = req.body;
+//   UserModel.findOne({ username: username })
+//     .exec()
+//     .then((user) => {
+//       user.comparePassword(password, (error, match) => {
+//         if (match) {
+//           req.session.username = username;
+//           req.session.isAdmin = user.isAdmin;
+//           return res.status(200).send({ username });
+//         }
+//         return res.status(400).send("The password does not match");
+//       });
+//     })
+//     .catch((error) => console.error(`Something went wrong: ${error}`));
+// });
 
 // update
 router.put("/:username", async (req, res) => {

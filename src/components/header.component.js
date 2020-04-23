@@ -1,7 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
-import {checkLoggedIn} from '../actions/user.action'
+import {checkLoggedIn} from '../actions/user.action';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
 const LOGGEDIN = 'LOGGEDIN';
 const LOGGEDOUT = 'LOGGEDOUT';
@@ -22,23 +24,45 @@ class Header extends React.Component {
         }
         const loggedoutRoute = (
             <div>
-                <Link to={'/home'}>Home</Link>&nbsp;
-                <Link to={'/profile'}>Profile</Link>&nbsp;
-                <Link to={'/youtube'}>Youtube</Link>&nbsp;
-                <Link to={'/search'}>Search</Link>&nbsp;
-                <Link to={'/login'}>Login</Link>&nbsp;
-                <Link to={'/register'}>Register</Link>&nbsp;
-                <span>You are logged out now</span>
+                <Navbar bg="light" variant="light">
+                    <Navbar.Brand href="/home">TubeList</Navbar.Brand>
+                    <Nav className="mr-auto">
+                        <Nav.Link href="/home">Home</Nav.Link>
+                        <Nav.Link href="/profile">Profile</Nav.Link>
+                        <Nav.Link href="/youtube">Explore</Nav.Link>
+                        <Nav.Link href="/search">Search</Nav.Link>
+                    </Nav>
+                    <Nav>
+                        <Nav.Link href="/login">Login</Nav.Link>
+                        <Nav.Link href="/register">Register</Nav.Link>
+                        <Navbar.Collapse className="justify-content-end">
+                            <Navbar.Text>
+                                You are logged out
+                            </Navbar.Text>
+                        </Navbar.Collapse>
+                    </Nav>
+                </Navbar>
             </div>
         );
         const loggedInRoute = (
             <div>
-                <Link to={'/home'}>Home</Link>&nbsp;
-                <Link to={'/profile'}>Profile</Link>&nbsp;
-                <Link to={'/youtube'}>Youtube</Link>&nbsp;
-                <Link to={'/search'}>Search</Link>&nbsp;
-                <Link to={'/logout'}>Logout</Link>&nbsp;
-                <span>Signed in as <b>{username}</b></span>
+                <Navbar bg="light" variant="light">
+                    <Navbar.Brand href="/home">TubeList</Navbar.Brand>
+                    <Nav className="mr-auto">
+                        <Nav.Link href="/home">Home</Nav.Link>
+                        <Nav.Link href="/profile">Profile</Nav.Link>
+                        <Nav.Link href="/youtube">Explore</Nav.Link>
+                        <Nav.Link href="/search">Search</Nav.Link>
+                    </Nav>
+                    <Nav>
+                        <Nav.Link href="/logout">Logout</Nav.Link>
+                        <Navbar.Collapse className="justify-content-end">
+                            <Navbar.Text>
+                                Logged in as <a href="/profile">{username}</a>
+                            </Navbar.Text>
+                        </Navbar.Collapse>
+                    </Nav>
+                </Navbar>
             </div>
         );
         switch (status) {

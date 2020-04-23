@@ -27,7 +27,7 @@ class AddPost extends React.Component {
 
     componentDidMount() {
         this.props.checkLoggedIn();
-        const username = this.props.routeState.username;
+        // const username = this.props.routeState.username;
         const playlistId = this.props.youtubeRedirect.playlistId;
         if (playlistId) {
             console.log('playlist id: ' + playlistId)
