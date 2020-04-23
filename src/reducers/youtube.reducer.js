@@ -54,6 +54,17 @@ function reviews(state='', action) {
     }
 }
 
+function playlist(state='', action) {
+    switch (action.type) {
+        case "FOLLOW_PLAYLIST_SUCCESS":
+            return 'follow'
+        case "UNFOLLOW_PLAYLIST_SUCCESS":
+            return 'unfollow'
+        default:
+            return state;
+    }
+}
+
 function loading(state = true, action) {
     switch (action.type) {
         case 'RECEIVE_POSTS':
@@ -121,7 +132,7 @@ export default combineReducers({
     posts,
     reviews,
     loading,
+    playlist,
     youtubeRedirect,
     youtubeError,
 });
-

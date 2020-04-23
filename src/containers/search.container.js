@@ -80,11 +80,6 @@ class Search extends React.Component {
                             disabled={this.props.inFlight}
                             value={this.state.keyword}
                             onChange={(e) => this.handleChange(e, 'keyword')}/> </label>
-                    {/*<label> Author:*/}
-                    {/*    <input type="text"*/}
-                    {/*        disabled={this.props.inFlight}*/}
-                    {/*        value={this.state.password}*/}
-                    {/*        onChange={(e) => this.handleChange(e, 'authors')}/> </label>*/}
                     <input type="button" value="Submit" onClick={() => this.handleClick()} disabled={this.props.inFlight}/>
                 </form>
                 <div>{this._renderBookList()}</div>

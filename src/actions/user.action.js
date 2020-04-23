@@ -92,6 +92,13 @@ function getUserSuccess(user) {
     }
 }
 
+function getPlaylistSuccess(playlists) {
+    return {
+        type: "GET_PLAYLISTS_SUCCESS",
+        playlists
+    }
+}
+
 export function selectUser(username) {
     return {
         type: "SELECT_USER",
@@ -162,6 +169,15 @@ export function getUserByUsername(username) {
         dispatch(getUserAttempt());
         return Axios.get("/api/user/" + username)
             .then(response => dispatch(getUserSuccess(response.data)),
+                error => console.log('An error occurred.', error)
+            );
+    }
+}
+
+export function fetchFollowingPlaylists(username) {
+    return function(dispatch) {
+        return Axios.get(`/api/user/${username}/followinglists`)
+            .then(response => dispatch(getPlaylistSuccess(response.data)),
                 error => console.log('An error occurred.', error)
             );
     }
