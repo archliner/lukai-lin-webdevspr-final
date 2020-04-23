@@ -28,6 +28,10 @@ function error(state = '', action) {
             return '';
         case 'LOGOUT_ATTEMPT':
             return '';
+        case 'UPDATE_PROFILE_SUCCESS':
+            return '';
+        case 'UPDATE_PROFILE_ERROR':
+            return action.error;
         default:
             return state;
     }
@@ -43,6 +47,19 @@ function routeState(state = {
             return {state: 'LOGGEDIN', user: action.user};
         case 'CHECK_LOGGEDIN_FAILURE':
             return {state: 'LOGGEDOUT'}
+        default:
+            return state;
+    }
+}
+
+function editMode(state = "", action) {
+    switch (action.type) {
+        case 'SWITCH_TO_EDIT':
+            return "EDIT";
+        case 'SWITCH_TO_DISPLAY':
+            return "DISPLAY";
+        case 'UPDATE_PROFILE_SUCCESS':
+            return "DISPLAY";
         default:
             return state;
     }
@@ -100,6 +117,7 @@ export default combineReducers({
     valid,
     routeState,
     getUser,
-    playlists
+    playlists,
+    editMode
 });
 

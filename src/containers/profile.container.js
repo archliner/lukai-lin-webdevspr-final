@@ -3,7 +3,12 @@
 import React from "react";
 import {connect} from 'react-redux';
 import {withRouter} from "react-router";
-import {checkLoggedIn, getUserByUsername, fetchFollowingPlaylists} from '../actions/user.action'
+import {
+    checkLoggedIn,
+    getUserByUsername,
+    fetchFollowingPlaylists,
+    displayProfile, editProfile, updateProfile
+} from '../actions/user.action'
 import {Button} from "reactstrap";
 
 class Profile extends React.Component {
@@ -14,6 +19,7 @@ class Profile extends React.Component {
 
     componentDidMount() {
         this.props.checkLoggedIn();
+        // this.props.setDisplay();
         const user = this.props.routeState.user;
         if (user)
             this.props.fetchFollowingPlaylists(user.username)
@@ -38,10 +44,15 @@ class Profile extends React.Component {
         // })
     }
 
-    render() {
-        const status = this.props.routeState.state;
-        const user = this.props.routeState.user;
-        let followingPlaylists = this.props.playlists;
+    _handleEdit() {
+        this.props.handleEdit();
+    }
+
+    _handleUpdate(username, bio, pwd1, pwd2) {
+        this.props.updateProfile(username, bio, pwd1, pwd2);
+    }
+
+    _renderProfile (status, user, editMode, followingPlaylists) {
         let playlistHeader = ""
         if (followingPlaylists) {
             followingPlaylists = this.props.playlists.map((item, i) => {
@@ -51,22 +62,55 @@ class Profile extends React.Component {
         }
 
         let profile = "";
+        let editButton = "";
+        let updateButton = "";
         if (!user || status === "LOGGEDOUT") {
             profile = <h3>Please login to see your profile</h3>
+            return profile;
+        } else if (status === "LOGGEDIN") {
+            if (editMode === "DISPLAY") {
+                profile = <div>
+                    {/*<Button color={"warning"} onClick={this._handleEdit()}>Edit</Button>*/}
+                    <h3>Username: {user.username}</h3>
+                    <h3>Bio Info: {user.bio || "This guy is lazy, nothing was provided here."}</h3>
+                    <h5>{playlistHeader}</h5>
+                    <ul>{followingPlaylists}</ul>
+                </div>
+            } else if (editMode === "EDIT") {
+                let newBio = user.bio;
+                let newPwd1 = "";
+                let newPwd2 = "";
+
+                profile = <div>
+                    <h3>Username: {user.username}</h3>
+                    <label>Biography:</label>
+                    <input onChange={event => (newBio = event.target.value)} type={"text"}/>
+                    <label>Password:</label>
+                    <input onChange={event => (newPwd1 = event.target.value)}/>
+                    <label>Confirm password:</label>
+                    <input onChange={event => (newPwd2 = event.target.value)}/>
+                    {/*<Button color={"primary"} onClick={this._handleUpdate(user.username, newBio, newPwd1, newPwd2)}>Update</Button>*/}
+                    {/*<Button color={"secondary"} onClick={this.props.setDisplay()}>Cancel</Button>*/}
+                </div>
+            }
+            return profile;
         }
-        else if (status === "LOGGEDIN") {
-            profile = <div>
-                <h3>Username: {user.username}</h3>
-                <h3>Bio Info: {user.bio || "This guy is lazy, nothing was provided here."}</h3>
-                <h5>{playlistHeader}</h5>
-                <ul>{followingPlaylists}</ul>
-                <Button color={"submit"}>Update</Button>
-            </div>
-        }
+    }
+
+    render() {
+        const status = this.props.routeState.state;
+        const user = this.props.routeState.user;
+        const editMode = this.props.editMode || "DISPLAY";
+        console.log(editMode)
+        let followingPlaylists = this.props.playlists;
+
         return (
             <div>
                 <h1>Profile Page</h1>
-                {profile}
+                {/*{editButton}*/}
+                {/*{profile}*/}
+                {/*{updateButton}*/}
+                {this._renderProfile(status,user,editMode)}
             </div>
         );
     }
@@ -76,8 +120,11 @@ class Profile extends React.Component {
 function mapDispatchToProps(dispatch, props) {
     return {
         checkLoggedIn: () => dispatch(checkLoggedIn()),
+        setDisplay: () => dispatch(displayProfile()),
         fetchFollowingPlaylists: (username) => dispatch(fetchFollowingPlaylists(username)),
-        getUserByUsername: (username) => dispatch(getUserByUsername(username))
+        getUserByUsername: (username) => dispatch(getUserByUsername(username)),
+        updateProfile: (username, bio, pwd1, pwd2) => dispatch(updateProfile(username, bio, pwd1, pwd2)),
+        handleEdit: () => dispatch(editProfile())
     }
 }
 
