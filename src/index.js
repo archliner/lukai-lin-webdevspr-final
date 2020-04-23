@@ -21,6 +21,13 @@ import Profile from "./containers/profile.container";
 import Search from "./containers/search.container";
 import EditReview from "./containers/editReview.container";
 
+// import "./index.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import TubeListNav from "./components/TubeListNav";
+// import Explore from "./components/pages/Explore";
+// import Profile from "./components/pages/Profile";
+// import Following from "./components/pages/Following";
+
 // const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 const userStore = createStore(
@@ -30,6 +37,18 @@ const userStore = createStore(
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
 );
+
+// ReactDOM.render(
+//     <React.StrictMode>
+//       <Router>
+//         <TubeListNav />
+//         <Route path="/explore" component={Explore} />
+//         <Route path="/following" component={Following} />
+//         <Route path="/profile" component={Profile} />
+//       </Router>
+//     </React.StrictMode>,
+//     document.getElementById("root")
+//   );
 
 ReactDOM.render(
     <Provider store={userStore}>

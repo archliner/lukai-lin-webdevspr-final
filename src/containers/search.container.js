@@ -19,7 +19,7 @@ class Search extends React.Component {
     }
 
     handleClick() {
-        if (this.state.title) {
+        if (this.state.keyword) {
             this.props.searchByTitle(this.state);
         }
     }
@@ -33,14 +33,15 @@ class Search extends React.Component {
             return null;
         }
         const books = [];
-        const list = this.props.searchList.bookList.map((book) => (
-            books.push({title: book.title, authors: book.authors})
-        ));
+        // const list = this.props.searchList.bookList.map((book) => (
+        //     books.push({title: book.title, authors: book.authors})
+        // ));
         
-        const bookSearchRows = books.map((book) => (
-            <tr key={book.title}>
-                <td>{book.title}</td>
-                <td>{book.authors}</td>
+        const youtubeSearchRows = this.props.searchList.playList.map((playlist) => (
+            <tr key={playlist.id.playlistId}>
+              <td><img src={playlist.snippet.thumbnails.default.url}/></td>
+                <td align={"middle"}>{playlist.snippet.title}</td>
+                <td>{playlist.id.playlistId}</td>
             </tr>
             ));
         
@@ -48,12 +49,13 @@ class Search extends React.Component {
             <table>
                 <thead>
                 <tr>
+                  <th>Playlist</th>
                     <th>Title</th>
-                    <th>Author</th>
+                    <th>Playlist ID</th>
                 </tr>
                 </thead>
                 <tbody>
-                    {bookSearchRows}
+                    {youtubeSearchRows}
                 </tbody>
             </table>)
 
@@ -64,16 +66,16 @@ class Search extends React.Component {
             <div>
                 <h3>Search Youtube</h3>
                 <form>
-                    <label> Title:
+                    <label> Keyword:
                         <input type="text"
                             disabled={this.props.inFlight}
-                            value={this.state.username}
-                            onChange={(e) => this.handleChange(e, 'title')}/> </label>
-                    <label> Author:
-                        <input type="text"
-                            disabled={this.props.inFlight}
-                            value={this.state.password}
-                            onChange={(e) => this.handleChange(e, 'authors')}/> </label>
+                            value={this.state.keyword}
+                            onChange={(e) => this.handleChange(e, 'keyword')}/> </label>
+                    {/*<label> Author:*/}
+                    {/*    <input type="text"*/}
+                    {/*        disabled={this.props.inFlight}*/}
+                    {/*        value={this.state.password}*/}
+                    {/*        onChange={(e) => this.handleChange(e, 'authors')}/> </label>*/}
                     <input type="button" value="Submit" onClick={() => this.handleClick()} disabled={this.props.inFlight}/>
                 </form>
                 <div>{this._renderBookList()}</div>

@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import {withRouter} from "react-router";
 import {Redirect} from "react-router";
 import {checkLoggedIn, getUserByUsername} from '../actions/user.action';
-import {postDetail, getReviewsByPlaylistId, addReview, rediectToEdit, deleteReview, deletePost} from '../actions/youtube.action';
+import {postDetail, getReviewsByPlaylistId, addReview, 
+    rediectToEdit, deleteReview, deletePost, followingPlaylist, unfollowPlaylist} from '../actions/youtube.action';
 
 class PostDetail extends React.Component {
     constructor() {
@@ -18,7 +19,6 @@ class PostDetail extends React.Component {
         if (post) {
             this.props.getReviewsByPlaylistId(post._id)
         }
-        console.log('post id: ' + post._id + ' username: ' + this.props.routeState.username)
         this.setState({playlist_Id: post._id, username: this.props.routeState.username})
     }
 
@@ -40,6 +40,14 @@ class PostDetail extends React.Component {
 
     _deletePost(postId) {
         this.props.deletePost(postId)
+    }
+
+    _followingPlaylist(username, playlistId) {
+        this.props.followingPlaylist(username, playlistId);
+    }
+
+    _unfollowingPlaylist(username, playlistId) {
+        this.props.unfollowPlaylist(username, playlistId)
     }
 
     _addComment(user, post) {
@@ -117,18 +125,24 @@ class PostDetail extends React.Component {
     }
 
     _renderDetail(post, user) {
-        // const post = this.props.youtubeRedirect.post;
         if (!post) {
             return <p>Loading...</p>
         }
         var deleteButton = '';
-        // const user = this.props.routeState.user;
         if (user) {
             if (user.username === post.sharedUser || user.isAdmin) {
                 deleteButton = (
-                    <td><input type='button' value='Delete' onClick={() => this._deletePost(post._id)}/> </td>
+                    <input type='button' value='Delete Post' onClick={() => this._deletePost(post._id)}/>
                 )
             }
+        }
+
+        var followButton = '';
+        var unfollowButton = '';
+        if (user) {
+
+            followButton = (<input type='button' value='Follow Playlist' onClick={() => this._followingPlaylist(user.username, post.playlistId)}/>);
+            unfollowButton = (<input type='button' value='Unfollow Playlist' onClick={() => this._unfollowingPlaylist(user.username, post.playlistId)}/>);
         }
         
         const detail = (
@@ -143,6 +157,7 @@ class PostDetail extends React.Component {
         return (
             <div>
                 <h1>Post Detail</h1>
+                {followButton}{unfollowButton}
                 {deleteButton}
                 {detail}
             </div>
@@ -175,7 +190,9 @@ function mapDispatchToProps(dispatch, props) {
         addReview: (review, playlistId) => dispatch(addReview(review, playlistId)),
         rediectToEdit: (reviewId) => dispatch(rediectToEdit(reviewId)),
         deleteReview: (reviewId, playlistId) => dispatch(deleteReview(reviewId, playlistId)),
-        deletePost: (postId) => dispatch(deletePost(postId))
+        deletePost: (postId) => dispatch(deletePost(postId)),
+        followingPlaylist: (username, playlistId) => dispatch(followingPlaylist(username, playlistId)),
+        unfollowPlaylist: (username, playlistId) => dispatch(unfollowPlaylist(username, playlistId))
     }
 }
 

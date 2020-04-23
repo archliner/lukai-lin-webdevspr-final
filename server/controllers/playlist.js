@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 // Get playlists shared by the user
 router.get("/user/:username", (req, res) => {
   const username = req.params.username;
-  return PlaylistModel.find({ username: username })
+  return PlaylistModel.find({ sharedUser: username })
     .exec()
     .then(
       (response) => res.status(200).send(response),

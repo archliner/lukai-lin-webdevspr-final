@@ -6,6 +6,7 @@ const UserModel = require("../models/user");
 const authParser = require("../middleware/middleware_auth.middleware");
 const logoutParser = require('../middleware/middleware_logout.middleware');
 
+// register
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
@@ -58,6 +59,7 @@ router.post("/admin", async (req, res) => {
 //   }
 // });
 
+// login
 router.post("/authenticate", function (req, res) {
   const { username, password } = req.body;
   UserModel.findOne({ username: username })
@@ -74,6 +76,38 @@ router.post("/authenticate", function (req, res) {
     })
     .catch((error) => console.error(`Something went wrong: ${error}`));
 });
+
+// update
+router.put("/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+    let entry = await UserModel.findOne({ username: username }).exec();
+    if (!entry) {
+      return res.status(404).send("ID not found");
+    }
+    const id = entry._id;
+    var followingPlaylists = entry.followingPlaylists;
+    if (req.body.following) {
+      followingPlaylists.push(req.body.following);
+    }
+    if (req.body.unfollowing) {
+      console.log('unfollowing: ' + req.body.unfollowing)
+      for(var i = followingPlaylists.length - 1; i >= 0; i--) {
+        if(followingPlaylists[i] == req.body.unfollowing) {
+          console.log('start splice')
+          followingPlaylists.splice(i, 1);
+        }
+      }
+    }
+    console.log('followinglist: ' + followingPlaylists)
+    req.body.followingPlaylists = followingPlaylists;
+    entry = await UserModel.findByIdAndUpdate(id, req.body).exec();
+    res.status(200).send(entry);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 
 router.get("/loggedIn", authParser, function (req, res) {
   return res.status(200).json({username: req.username, isAdmin: req.isAdmin});

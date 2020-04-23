@@ -2,15 +2,15 @@ import Axios from 'axios'
 
 function requestBookListByTitle() {
     return {
-        type: "REQUEST_SEARCH_BOOK_TITLE"
+        type: "REQUEST_PLAYLIST_TITLE"
     }
 }
 
-function receiveBookListByTitle(bookList, title) {
+function receiveBookListByTitle(playList) {
     return {
-        type: "RECEIVE_SEARCH_BOOK_TITLE",
-        bookList,
-        title
+        type: "RECEIVE_PLAYLIST_TITLE",
+        playList
+        // title
     }
 }
 
@@ -100,30 +100,28 @@ function editReviewSuccess() {
     }
 }
 
-export function searchByTitle(request) {
-    return function(dispatch) {
-        dispatch(requestBookListByTitle());
-        return Axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${request.title}&key=AIzaSyA7DRYhCRLkAgG0pSK7lspzE_T6qP_kdNQ`) 
-            .then(response => {
-                console.log('receive books')
-                return response.data.items.map(item => item.volumeInfo);
-            })
-            .then(info => dispatch(receiveBookListByTitle(info, request.title)),
-                error => console.log('An error occurred.', error) 
-            );
+function followPlaylistSuccess() {
+    return {
+        type: "FOLLOW_PLAYLIST_SUCCESS",
     }
 }
 
-export function searchByAuthors(request) {
+function unfollowPlaylistSuccess() {
+    return {
+        type: "UNFOLLOW_PLAYLIST_SUCCESS",
+    }
+}
+
+export function searchByTitle(request) {
     return function(dispatch) {
-        dispatch(requestBookListByAuthor());
-        return Axios.get(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${request.authors}&key=AIzaSyA7DRYhCRLkAgG0pSK7lspzE_T6qP_kdNQ`) 
+        dispatch(requestBookListByTitle());
+        return Axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=playlist&maxResults=25&q=${request.keyword}&key=AIzaSyCACcXftmROEAKdGIyTOxUunFO0_2wlkxU`)
             .then(response => {
-                return response.data.items.map(item => item.volumeInfo);
+                return response.data.items;
             })
-            .then(info => dispatch(receiveBookListByAuthor(info, request.authors)),
-                error => console.log('An error occurred.', error) 
-            );
+            .then(info => dispatch(receiveBookListByTitle(info)),
+                error => console.log('An error occurred.', error)
+                );
     }
 }
 
@@ -208,6 +206,24 @@ export function deletePost(postId) {
     return function(dispatch) {
         return Axios.delete(`/api/playlist/${postId}`)
             .then(response => dispatch(deletePostSuccess()),
+            error => console.log('An error occurred.', error)
+        )
+    }
+}
+
+export function followingPlaylist(username, playlistId) {
+    return function(dispatch) {
+        return Axios.put(`/api/user/${username}`, {following: playlistId})
+            .then(response => dispatch(followPlaylistSuccess()),
+            error => console.log('An error occurred.', error)
+        )
+    }
+}
+
+export function unfollowPlaylist(username, playlistId) {
+    return function(dispatch) {
+        return Axios.put(`/api/user/${username}`, {unfollowing: playlistId})
+            .then(response => dispatch(unfollowPlaylistSuccess()),
             error => console.log('An error occurred.', error)
         )
     }

@@ -2,21 +2,21 @@ import {combineReducers} from 'redux'
 
 function searchList(
     state = {
-        bookList: [],
-        request: {},
+        playList: [],
+        // request: {},
         inFlight: false,
     },
     action
 ) {
     switch (action.type) {
-        case "REQUEST_SEARCH_BOOK_TITLE":
+        case "REQUEST_PLAYLIST_TITLE":
             return Object.assign({}, state, {
                 inFlight: true,
             });
-        case "RECEIVE_SEARCH_BOOK_TITLE":
+        case "RECEIVE_PLAYLIST_TITLE":
             return Object.assign({}, state, {
-                bookList: action.bookList,
-                request: {title: action.title},
+                playList: action.playList,
+                // request: {title: action.title},
                 inFlight: false,
             });
         case "REQUEST_SEARCH_BOOK_AUTHOR":
@@ -25,8 +25,8 @@ function searchList(
             });
         case "RECEIVE_SEARCH_BOOK_AUTHOR":
             return Object.assign({}, state, {
-                bookList: action.bookList,
-                request: {authors: action.authors},
+                playList: action.playList,
+                // request: {authors: action.authors},
                 inFlight: false,
             });
         default:
@@ -51,6 +51,17 @@ function reviews(state='', action) {
             return action.review
         default:
             return state
+    }
+}
+
+function playlist(state='', action) {
+    switch (action.type) {
+        case "FOLLOW_PLAYLIST_SUCCESS":
+            return 'follow'
+        case "UNFOLLOW_PLAYLIST_SUCCESS":
+            return 'unfollow'
+        default:
+            return state;
     }
 }
 
@@ -121,7 +132,7 @@ export default combineReducers({
     posts,
     reviews,
     loading,
+    playlist,
     youtubeRedirect,
     youtubeError,
 });
-
