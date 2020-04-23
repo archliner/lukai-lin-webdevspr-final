@@ -94,6 +94,13 @@ function redirectToEdit(reviewId) {
     }
 }
 
+function redirectToAddPost(playlistId) {
+    return {
+        type: "REDIRECT_ADD_POST",
+        playlistId
+    }
+}
+
 function editReviewSuccess() {
     return {
         type: "EDIT_REVIEW_SUCCESS",
@@ -226,5 +233,11 @@ export function unfollowPlaylist(username, playlistId) {
             .then(response => dispatch(unfollowPlaylistSuccess()),
             error => console.log('An error occurred.', error)
         )
+    }
+}
+
+export function addPostWithPlaylistId(playlistId) {
+    return function(dispatch) {
+        dispatch(redirectToAddPost(playlistId));
     }
 }

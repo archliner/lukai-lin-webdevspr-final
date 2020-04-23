@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {withRouter} from "react-router";
 import {Redirect} from "react-router";
 import StarRatings from "react-star-ratings";
-import {checkLoggedIn, getUserByUsername} from '../actions/user.action';
+import {checkLoggedIn, getUserByUsername, fetchFollowingPlaylists} from '../actions/user.action';
 import {postDetail, getReviewsByPlaylistId, addReview, 
     rediectToEdit, deleteReview, deletePost, followingPlaylist, unfollowPlaylist} from '../actions/youtube.action';
 
@@ -159,13 +159,16 @@ class PostDetail extends React.Component {
         }
         
         const detail = (
-            <ul>
-                <li>playlist: {post.playlistId}</li>
-                <li>name: {post.name}</li>
-                <li>description: {post.description}</li>
-                <li>shared user: {post.sharedUser}</li>
-                <li>share time: {post.shareTime}</li>
-            </ul>
+            <div>
+                <ul>
+                    <li>playlist: <a href={post.playlistId}>{post.playlistId}</a></li>
+                    <li>name: {post.name}</li>
+                    <li>description: {post.description}</li>
+                    <li>shared user: {post.sharedUser}</li>
+                    <li>share time: {post.shareTime}</li>
+                </ul>
+            </div>
+
         );
         return (
             <div>
@@ -204,9 +207,17 @@ function mapDispatchToProps(dispatch, props) {
         rediectToEdit: (reviewId) => dispatch(rediectToEdit(reviewId)),
         deleteReview: (reviewId, playlistId) => dispatch(deleteReview(reviewId, playlistId)),
         deletePost: (postId) => dispatch(deletePost(postId)),
+        followingPlaylist: (username, playlistId) => {
+            dispatch(followingPlaylist(username, playlistId))
+            dispatch(fetchFollowingPlaylists(username))
+        },
+        unfollowPlaylist: (username, playlistId) => {
+            dispatch(unfollowPlaylist(username, playlistId))
+            dispatch(fetchFollowingPlaylists(username))
+        },
         // checkFollowingList: (playListId) => dispatch(checkFollowings(playListId)),
-        followingPlaylist: (username, playlistId) => dispatch(followingPlaylist(username, playlistId)),
-        unfollowPlaylist: (username, playlistId) => dispatch(unfollowPlaylist(username, playlistId))
+        // followingPlaylist: (username, playlistId) => dispatch(followingPlaylist(username, playlistId)),
+        // unfollowPlaylist: (username, playlistId) => dispatch(unfollowPlaylist(username, playlistId))
     }
 }
 

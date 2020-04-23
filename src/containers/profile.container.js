@@ -1,3 +1,4 @@
+  
 // remove all references to username
 import React from "react";
 import {connect} from 'react-redux';
@@ -49,7 +50,6 @@ class Profile extends React.Component {
             playlistHeader = "Following playlists"
         }
 
-
         let profile = "";
         if (!user || status === "LOGGEDOUT") {
             profile = <h3>Please login to see your profile</h3>
@@ -63,11 +63,6 @@ class Profile extends React.Component {
                 <Button color={"submit"}>Update</Button>
             </div>
         }
-
-
-
-
-
         return (
             <div>
                 <h1>Profile Page</h1>

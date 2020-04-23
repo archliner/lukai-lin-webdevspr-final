@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from 'react-redux';
 import {checkLoggedIn} from '../actions/user.action';
-import {searchByAuthors, searchByTitle} from '../actions/youtube.action';
+import {searchByAuthors, searchByTitle, addPostWithPlaylistId} from '../actions/youtube.action';
 import {Redirect} from "react-router";
 
 class Search extends React.Component {
@@ -22,6 +22,10 @@ class Search extends React.Component {
         if (this.state.keyword) {
             this.props.searchByTitle(this.state);
         }
+    }
+
+    handlePostClick(playlistId) {
+        this.props.addPostWithPlaylistId(playlistId);
     }
 
     _getThumbnail(thumbnails) {
@@ -51,6 +55,7 @@ class Search extends React.Component {
               <td>{this._getThumbnail(playlist.snippet.thumbnails)}</td>
                 <td align={"middle"}>{playlist.snippet.title}</td>
                 <td>{playlist.id.playlistId}</td>
+                <td><input type="button" value="Post this" onClick={() => this.handlePostClick("https://www.youtube.com/playlist?list=" + playlist.id.playlistId)}/></td>
             </tr>
             ));
         
@@ -71,6 +76,9 @@ class Search extends React.Component {
     }
 
     render() {
+        if (this.props.youtubeRedirect.route) {
+            return (<Redirect to={this.props.youtubeRedirect.route}/>)
+        }
         return (
             <div>
                 <h3>Search Youtube</h3>
@@ -93,7 +101,8 @@ function mapDispatchToProps(dispatch, props) {
     return {
         checkLoggedIn: () => dispatch(checkLoggedIn()),
         searchByTitle: (request) => dispatch(searchByTitle(request)),
-        searchByAuthors: (request) => dispatch(searchByAuthors(request))
+        searchByAuthors: (request) => dispatch(searchByAuthors(request)),
+        addPostWithPlaylistId: (playlistId) => dispatch(addPostWithPlaylistId(playlistId))
     }
 };
 

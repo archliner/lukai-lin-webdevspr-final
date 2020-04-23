@@ -21,14 +21,10 @@ class Youtube extends React.Component {
         this.props.postDetail(id);
     }
 
-    _handleSubmit(id){
-        this.props.history.push('/youtube/detail?id=' + id)
-    }
-
     _renderPostList() {
         const postRows = this.props.posts.map(post => (
             <tr key={post._id}>
-                <td>{post.playlistId}</td>
+                <td><a href={post.playlistId}>{post.playlistId}</a></td>
                 <td>{post.name}</td>
                 <td>{post.sharedUser}</td>
                 <td>{new Date(post.shareTime).toTimeString()}</td>
