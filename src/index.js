@@ -20,6 +20,7 @@ import PostDetail from './containers/postDetail.container';
 import Profile from "./containers/profile.container";
 import Search from "./containers/search.container";
 import EditReview from "./containers/editReview.container";
+// import 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css';
 
 // import "./index.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -33,8 +34,7 @@ import EditReview from "./containers/editReview.container";
 const userStore = createStore(
     reducers, 
     compose (
-        applyMiddleware(thunkMiddleware),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        applyMiddleware(thunkMiddleware)
     )
 );
 
