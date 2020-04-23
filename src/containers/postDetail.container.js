@@ -43,6 +43,10 @@ class PostDetail extends React.Component {
         this.props.deletePost(postId)
     }
 
+    // _checkFollowingList(playListId) {
+    //     this.props.checkFollowingList(playListId)
+    // }
+
     _followingPlaylist(username, playlistId) {
         this.props.followingPlaylist(username, playlistId);
     }
@@ -145,12 +149,13 @@ class PostDetail extends React.Component {
             }
         }
 
-        var followButton = '';
-        var unfollowButton = '';
-        if (user) {
-
-            followButton = (<input type='button' value='Follow Playlist' onClick={() => this._followingPlaylist(user.username, post.playlistId)}/>);
-            unfollowButton = (<input type='button' value='Unfollow Playlist' onClick={() => this._unfollowingPlaylist(user.username, post.playlistId)}/>);
+        // var followButton = '';
+        // var unfollowButton = '';
+        var followingSwitchButton = '';
+        if (this.props.playlists.includes(post.playlistId)) {
+            followingSwitchButton = (<input type='button' value='Unfollow Playlist' onClick={() => this._unfollowingPlaylist(user.username, post.playlistId)}/>);
+        } else {
+            followingSwitchButton = (<input type='button' value='Follow Playlist' onClick={() => this._followingPlaylist(user.username, post.playlistId)}/>);
         }
         
         const detail = (
@@ -165,7 +170,7 @@ class PostDetail extends React.Component {
         return (
             <div>
                 <h1>Post Detail</h1>
-                {followButton}{unfollowButton}
+                {followingSwitchButton}
                 {deleteButton}
                 {detail}
             </div>
@@ -199,6 +204,7 @@ function mapDispatchToProps(dispatch, props) {
         rediectToEdit: (reviewId) => dispatch(rediectToEdit(reviewId)),
         deleteReview: (reviewId, playlistId) => dispatch(deleteReview(reviewId, playlistId)),
         deletePost: (postId) => dispatch(deletePost(postId)),
+        // checkFollowingList: (playListId) => dispatch(checkFollowings(playListId)),
         followingPlaylist: (username, playlistId) => dispatch(followingPlaylist(username, playlistId)),
         unfollowPlaylist: (username, playlistId) => dispatch(unfollowPlaylist(username, playlistId))
     }
