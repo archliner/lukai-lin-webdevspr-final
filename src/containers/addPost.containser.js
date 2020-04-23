@@ -26,10 +26,15 @@ class AddPost extends React.Component {
     }
 
     componentDidMount() {
-        // this.props.clear();
         this.props.checkLoggedIn();
         const username = this.props.routeState.username;
-        this.setState({playlistId: '', description: '', name: '', tags: []});
+        const playlistId = this.props.youtubeRedirect.playlistId;
+        if (playlistId) {
+            console.log('playlist id: ' + playlistId)
+            this.setState({playlistId: playlistId, description: '', name: '', tags: []});
+        } else {
+            this.setState({playlistId: '', description: '', name: '', tags: []});
+        }
 
     }
 
@@ -45,7 +50,7 @@ class AddPost extends React.Component {
                     <label> Playlist:
                         <input type="text"
                             disabled={this.props.inFlight}
-                            value={this.state.playlist}
+                            value={this.state.playlistId}
                             onChange={(e) => this.handleChange(e, 'playlistId')}/> </label>
                     <label> List name:
                         <input type="text"

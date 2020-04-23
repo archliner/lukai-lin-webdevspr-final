@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from 'react-redux';
 import {checkLoggedIn} from '../actions/user.action';
-import {searchByAuthors, searchByTitle} from '../actions/youtube.action';
+import {searchByAuthors, searchByTitle, addPostWithPlaylistId} from '../actions/youtube.action';
 import {Redirect} from "react-router";
 
 class Search extends React.Component {
@@ -24,6 +24,19 @@ class Search extends React.Component {
         }
     }
 
+    handlePostClick(playlistId) {
+        this.props.addPostWithPlaylistId(playlistId);
+    }
+
+    _getThumbnail(thumbnails) {
+      let imgUrl = "";
+      if (thumbnails) {
+        imgUrl = thumbnails.default.url;
+      } else
+        imgUrl = "https://upload.wikimedia.org/wikipedia/commons/e/e1/YouTube_play_buttom_icon_%282013-2017%29.svg";
+      return <img src={imgUrl}/>
+    }
+
     // componentDidMount() {
     //     this.props.clear();
     //     this.props.checkLoggedIn();
@@ -39,9 +52,10 @@ class Search extends React.Component {
         
         const youtubeSearchRows = this.props.searchList.playList.map((playlist) => (
             <tr key={playlist.id.playlistId}>
-              <td><img src={playlist.snippet.thumbnails.default.url}/></td>
+              <td>{this._getThumbnail(playlist.snippet.thumbnails)}</td>
                 <td align={"middle"}>{playlist.snippet.title}</td>
                 <td>{playlist.id.playlistId}</td>
+                <td><input type="button" value="Post this" onClick={() => this.handlePostClick("https://www.youtube.com/playlist?list=" + playlist.id.playlistId)}/></td>
             </tr>
             ));
         
@@ -62,6 +76,9 @@ class Search extends React.Component {
     }
 
     render() {
+        if (this.props.youtubeRedirect.route) {
+            return (<Redirect to={this.props.youtubeRedirect.route}/>)
+        }
         return (
             <div>
                 <h3>Search Youtube</h3>
@@ -84,7 +101,8 @@ function mapDispatchToProps(dispatch, props) {
     return {
         checkLoggedIn: () => dispatch(checkLoggedIn()),
         searchByTitle: (request) => dispatch(searchByTitle(request)),
-        searchByAuthors: (request) => dispatch(searchByAuthors(request))
+        searchByAuthors: (request) => dispatch(searchByAuthors(request)),
+        addPostWithPlaylistId: (playlistId) => dispatch(addPostWithPlaylistId(playlistId))
     }
 };
 
