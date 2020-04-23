@@ -59,6 +59,15 @@ function username(state = '', action) {
     }
 }
 
+function playlists(state="", action) {
+    switch(action.type) {
+        case "GET_PLAYLISTS_SUCCESS":
+            return action.playlists;
+        default:
+            return state;
+    }
+}
+
 function getUser(state = {
     username: '',
     isMaster: false,
@@ -90,6 +99,7 @@ export default combineReducers({
     username,
     valid,
     routeState,
-    getUser
+    getUser,
+    playlists
 });
 

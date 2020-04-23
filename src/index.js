@@ -22,6 +22,13 @@ import Search from "./containers/search.container";
 import EditReview from "./containers/editReview.container";
 // import 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css';
 
+// import "./index.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import TubeListNav from "./components/TubeListNav";
+// import Explore from "./components/pages/Explore";
+// import Profile from "./components/pages/Profile";
+// import Following from "./components/pages/Following";
+
 // const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 const userStore = createStore(
@@ -30,6 +37,18 @@ const userStore = createStore(
         applyMiddleware(thunkMiddleware)
     )
 );
+
+// ReactDOM.render(
+//     <React.StrictMode>
+//       <Router>
+//         <TubeListNav />
+//         <Route path="/explore" component={Explore} />
+//         <Route path="/following" component={Following} />
+//         <Route path="/profile" component={Profile} />
+//       </Router>
+//     </React.StrictMode>,
+//     document.getElementById("root")
+//   );
 
 ReactDOM.render(
     <Provider store={userStore}>
