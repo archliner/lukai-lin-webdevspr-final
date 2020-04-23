@@ -34,7 +34,8 @@ import EditReview from "./containers/editReview.container";
 const userStore = createStore(
     reducers, 
     compose (
-        applyMiddleware(thunkMiddleware)
+        applyMiddleware(thunkMiddleware),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
 );
 
@@ -60,8 +61,8 @@ ReactDOM.render(
                 <Route path="/search" component={Search}/>
                 <Route exact path="/youtube" component={LoggedInComponent(Youtube)}/>
                 <Route exact path="/youtube/addpost" component={LoggedInComponent(AddPost)}/>
-                <Route exact path="/youtube/detail" component={LoggedInComponent(PostDetail)}/>
-                <Route exact path="/youtube/detail/editcomment" component={LoggedInComponent(EditReview)}/>
+                <Route exact path="/youtube/detail/:id" component={LoggedInComponent(PostDetail)}/>
+                <Route exact path="/youtube/detail/:id/editcomment" component={LoggedInComponent(EditReview)}/>
                 <Route path="/profile" component={LoggedInComponent(Profile)}/>
                 <Route path="/login" component={UserLogin}/>
                 <Route path="/register" component={Register}/>

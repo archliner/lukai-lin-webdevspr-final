@@ -105,7 +105,7 @@ function youtubeRedirect(state = {
             });
         case "RECEIVE_POST_DETAIL_SUCCESS":
             return Object.assign({}, state, {
-                route: '/youtube/detail',
+                // route: '/youtube/detail',
                 post: action.post
             });
         case "REDIRECT_ADD_POST":
@@ -119,11 +119,11 @@ function youtubeRedirect(state = {
             });
         case "EDIT_REVIEW_SUCCESS":
             return Object.assign({}, state, {
-                route: '/youtube/detail',
+                route: '/youtube/detail/' + action.playlistId,
             });
         case "REDIRECT_TO_EDIT":
             return Object.assign({}, state, {
-                route: '/youtube/detail/editcomment',
+                route: '/youtube/detail/' + action.postId + '/editcomment',
                 reviewId: action.reviewId
             }); 
         default:

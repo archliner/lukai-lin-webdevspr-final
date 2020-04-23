@@ -24,7 +24,6 @@ class EditReview extends React.Component {
         const reviewId = this.props.youtubeRedirect.reviewId;
         const username = this.props.routeState.user.username;
         const isAdmin = this.props.routeState.user.isAdmin;
-        // console.log(username + ' ' + isAdmin)
         this.setState({rate: '', comment: '', _id: reviewId, username: username, isAdmin: isAdmin});
     }
 
