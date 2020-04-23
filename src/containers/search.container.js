@@ -24,6 +24,15 @@ class Search extends React.Component {
         }
     }
 
+    _getThumbnail(thumbnails) {
+      let imgUrl = "";
+      if (thumbnails) {
+        imgUrl = thumbnails.default.url;
+      } else
+        imgUrl = "https://upload.wikimedia.org/wikipedia/commons/e/e1/YouTube_play_buttom_icon_%282013-2017%29.svg";
+      return <img src={imgUrl}/>
+    }
+
     // componentDidMount() {
     //     this.props.clear();
     //     this.props.checkLoggedIn();
@@ -39,7 +48,7 @@ class Search extends React.Component {
         
         const youtubeSearchRows = this.props.searchList.playList.map((playlist) => (
             <tr key={playlist.id.playlistId}>
-              <td><img src={playlist.snippet.thumbnails.default.url}/></td>
+              <td>{this._getThumbnail(playlist.snippet.thumbnails)}</td>
                 <td align={"middle"}>{playlist.snippet.title}</td>
                 <td>{playlist.id.playlistId}</td>
             </tr>
