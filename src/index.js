@@ -20,6 +20,7 @@ import PostDetail from './containers/postDetail.container';
 import Profile from "./containers/profile.container";
 import Search from "./containers/search.container";
 import EditReview from "./containers/editReview.container";
+// import 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css';
 
 // const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
 

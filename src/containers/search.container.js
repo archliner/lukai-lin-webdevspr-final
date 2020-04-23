@@ -39,8 +39,9 @@ class Search extends React.Component {
         
         const youtubeSearchRows = this.props.searchList.playList.map((playlist) => (
             <tr key={playlist.id.playlistId}>
-                <td>{playlist.snippet.title}</td>
-                <td>{playlist.snippet.description}</td>
+              <td><img src={playlist.snippet.thumbnails.default.url}/></td>
+                <td align={"middle"}>{playlist.snippet.title}</td>
+                <td>{playlist.id.playlistId}</td>
             </tr>
             ));
         
@@ -48,8 +49,9 @@ class Search extends React.Component {
             <table>
                 <thead>
                 <tr>
+                  <th>Playlist</th>
                     <th>Title</th>
-                    <th>Description</th>
+                    <th>Playlist ID</th>
                 </tr>
                 </thead>
                 <tbody>
