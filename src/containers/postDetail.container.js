@@ -15,12 +15,11 @@ class PostDetail extends React.Component {
 
     componentDidMount() {
         this.props.checkLoggedIn();
-        
-        const post = this.props.youtubeRedirect.post;
-        if (post) {
-            this.props.getReviewsByPlaylistId(post._id)
-        }
-        this.setState({playlist_Id: post._id, username: this.props.routeState.username})
+        const id = this.props.match.params.id;
+        this.props.postDetail(id);
+        // const post = this.props.youtubeRedirect.post;
+        this.props.getReviewsByPlaylistId(id)
+        this.setState({playlist_Id: id, username: this.props.routeState.username})
     }
 
     handleChange(event, value) {
@@ -31,8 +30,8 @@ class PostDetail extends React.Component {
         this.props.addReview(this.state, post._id);
     }
 
-    _editReview(reviewId) {
-        this.props.rediectToEdit(reviewId);
+    _editReview(postId, reviewId) {
+        this.props.rediectToEdit(postId, reviewId);
     }
 
     _deleteReview(reviewId, post) {
@@ -42,10 +41,6 @@ class PostDetail extends React.Component {
     _deletePost(postId) {
         this.props.deletePost(postId)
     }
-
-    // _checkFollowingList(playListId) {
-    //     this.props.checkFollowingList(playListId)
-    // }
 
     _followingPlaylist(username, playlistId) {
         this.props.followingPlaylist(username, playlistId);
@@ -97,7 +92,7 @@ class PostDetail extends React.Component {
             if (user) {
                 if (review.username === user.username || user.username === post.sharedUser || user.isAdmin) {
                     return (<div>
-                        <input type='button' value='Edit' onClick={() => this._editReview(review._id)}/>
+                        <input type='button' value='Edit' onClick={() => this._editReview(post._id, review._id)}/>
                         <input type='button' value='Delete' onClick={() => this._deleteReview(review._id, post)}/>
                     </div>);
                 }
@@ -152,10 +147,12 @@ class PostDetail extends React.Component {
         // var followButton = '';
         // var unfollowButton = '';
         var followingSwitchButton = '';
-        if (this.props.playlists.includes(post.playlistId)) {
-            followingSwitchButton = (<input type='button' value='Unfollow Playlist' onClick={() => this._unfollowingPlaylist(user.username, post.playlistId)}/>);
-        } else {
-            followingSwitchButton = (<input type='button' value='Follow Playlist' onClick={() => this._followingPlaylist(user.username, post.playlistId)}/>);
+        if (user) {
+            if (this.props.playlists.includes(post.playlistId)) {
+                followingSwitchButton = (<input type='button' value='Unfollow Playlist' onClick={() => this._unfollowingPlaylist(user.username, post.playlistId)}/>);
+            } else {
+                followingSwitchButton = (<input type='button' value='Follow Playlist' onClick={() => this._followingPlaylist(user.username, post.playlistId)}/>);
+            }
         }
         
         const detail = (
@@ -204,7 +201,7 @@ function mapDispatchToProps(dispatch, props) {
         postDetail: (id) => dispatch(postDetail(id)),
         getReviewsByPlaylistId: (id) => dispatch(getReviewsByPlaylistId(id)),
         addReview: (review, playlistId) => dispatch(addReview(review, playlistId)),
-        rediectToEdit: (reviewId) => dispatch(rediectToEdit(reviewId)),
+        rediectToEdit: (postId, reviewId) => dispatch(rediectToEdit(postId, reviewId)),
         deleteReview: (reviewId, playlistId) => dispatch(deleteReview(reviewId, playlistId)),
         deletePost: (postId) => dispatch(deletePost(postId)),
         followingPlaylist: (username, playlistId) => {

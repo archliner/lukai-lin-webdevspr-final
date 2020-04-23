@@ -3,6 +3,11 @@ import React from "react";
 import {connect} from 'react-redux';
 import {withRouter} from "react-router";
 import {Redirect} from "react-router";
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+  } from 'react-router-dom';
 import {checkLoggedIn, getUserByUsername} from '../actions/user.action';
 import {fetchPosts, postDetail} from '../actions/youtube.action';
 
@@ -28,7 +33,8 @@ class Youtube extends React.Component {
                 <td>{post.name}</td>
                 <td>{post.sharedUser}</td>
                 <td>{new Date(post.shareTime).toTimeString()}</td>
-                <td><input type='button' value='Detail' onClick={() => this._postDetail(post._id)}/> </td>
+                {/* <td><input type='button' value='Detail' onClick={() => this._postDetail(post._id)}/> </td> */}
+                <td><Link to={`/youtube/detail/${post._id}`}>Detail</Link></td>
             </tr>));
         return (
             <div>

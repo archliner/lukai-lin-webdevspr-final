@@ -87,9 +87,10 @@ function addReviewSuccess() {
     }
 }
 
-function redirectToEdit(reviewId) {
+function redirectToEdit(postId, reviewId) {
     return {
         type: "REDIRECT_TO_EDIT",
+        postId, 
         reviewId
     }
 }
@@ -101,9 +102,11 @@ function redirectToAddPost(playlistId) {
     }
 }
 
-function editReviewSuccess() {
+function editReviewSuccess(review) {
+    // console.log('edit review : ' + review.playlist_Id)
     return {
         type: "EDIT_REVIEW_SUCCESS",
+        playlistId: review.playlist_Id
     }
 }
 
@@ -183,9 +186,9 @@ export function addReview(review, playlistId) {
     }
 }
 
-export function rediectToEdit(reviewId) {
+export function rediectToEdit(postId, reviewId) {
     return function(dispatch) {
-        dispatch(redirectToEdit(reviewId));
+        dispatch(redirectToEdit(postId, reviewId));
     }
 }
 
