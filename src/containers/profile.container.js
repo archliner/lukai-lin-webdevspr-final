@@ -63,7 +63,6 @@ class Profile extends React.Component {
                 <Button color={"submit"}>Update</Button>
             </div>
         }
-
         return (
             <div>
                 <h1>Profile Page</h1>
