@@ -55,7 +55,10 @@ class Search extends React.Component {
                 {/*<td align={"middle"}>{playlist.snippet.title}</td>*/}
                 <td align={"center"}><a href={"https://www.youtube.com/playlist?list=" + playlist.id.playlistId}>{playlist.snippet.title}</a></td>
                 <td>{playlist.snippet.description}</td>
-                <td align={"center"}><input type="button" value="Post this" onClick={() => this.handlePostClick("https://www.youtube.com/playlist?list=" + playlist.id.playlistId)}/></td>
+                {/* <td align={"center"}><input type="button" value="Post this" onClick={() => this.handlePostClick("https://www.youtube.com/playlist?list=" + playlist.id.playlistId)}/></td> */}
+                <Button onClick={() => this.handlePostClick("https://www.youtube.com/playlist?list=" + playlist.id.playlistId)} variant="primary">
+                    Post This Playlist
+                </Button>
             </tr>
             ));
         
