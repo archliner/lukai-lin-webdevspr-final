@@ -3,6 +3,12 @@ import {connect} from 'react-redux';
 import {checkLoggedIn} from '../actions/user.action';
 import {editReview} from '../actions/youtube.action';
 import {Redirect} from "react-router";
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Container from 'react-bootstrap/Container';
 
 class EditReview extends React.Component {
     constructor(props) {
@@ -33,20 +39,35 @@ class EditReview extends React.Component {
         }
         return (
             <div>
-                <form onSubmit={(e) => this.handleSubmit(e)}>
-                    {/* {error} */}
-                    <label> Rate:
-                        <input type="text"
-                            disabled={this.props.inFlight}
-                            value={this.state.rate}
-                            onChange={(e) => this.handleChange(e, 'rate')}/> </label>
-                    <label> Comment:
-                        <input type="text"
-                            disabled={this.props.inFlight}
-                            value={this.state.password}
-                            onChange={(e) => this.handleChange(e, 'comment')}/> </label>
-                    <input type="submit" value="Submit" disabled={this.props.inFlight}/>
-                </form>
+                <Jumbotron>
+                    <Container>
+                        <h2 className="text-center">Edit Rating</h2>
+                        <Form onSubmit={(e) => this.handleSubmit(e)} className="justify-content-md-center">
+                            <Form.Row className="justify-content-md-center">
+                                <Form.Group as={Col} controlId="formGridUsername" xs lg="4">
+                                <Form.Label>Rate</Form.Label>
+                                <Form.Control type="text" placeholder="Enter Rate" onChange={(e) => this.handleChange(e, 'rate')}/>
+                                </Form.Group>
+                            </Form.Row>
+                            <Form.Row className="justify-content-md-center">
+                                <Form.Group as={Col} controlId="formGridPassword" xs lg="4">
+                                    <Form.Label>Comment</Form.Label>
+                                    <Form.Control as="textarea" placeholder="Comment here..." rows="3" onChange={(e) => this.handleChange(e, 'comment')} />
+                                    {/* <Form.Control type="text" placeholder="Comment" onChange={(e) => this.handleChange(e, 'comment')}/> */}
+                                </Form.Group>
+                            </Form.Row>
+                            <br/>
+                            <Form.Group as={Row} className="justify-content-md-center">
+                                <Col xs lg="4" >
+                                    <Button block variant="primary" type="submit" disabled={this.props.inFlight}>
+                                        Edit
+                                    </Button>
+                                </Col>
+                            </Form.Group>
+                            {/* {error} */}
+                        </Form>
+                    </Container>
+                </Jumbotron>
             </div>
         );
     }
