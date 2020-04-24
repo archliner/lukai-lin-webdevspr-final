@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {checkLoggedIn} from '../actions/user.action';
 import {addPost} from '../actions/youtube.action';
 import {Redirect} from "react-router";
+import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
+import {Container, Jumbotron} from "react-bootstrap";
 
 class AddPost extends React.Component {
     constructor(props) {
@@ -44,31 +46,60 @@ class AddPost extends React.Component {
         }
         
         return (
-            <div>
+            <div align={"center"}>
+                <Jumbotron>
+                    <h3>Add a post</h3>
                 <form onSubmit={(e) => this.handleSubmit(e)}>
                     {/* {error} */}
-                    <label> Playlist:
+                    <div><label style={{width: 200+'px'}}> Playlist
                         <input type="text"
-                            disabled={this.props.inFlight}
-                            value={this.state.playlistId}
-                            onChange={(e) => this.handleChange(e, 'playlistId')}/> </label>
-                    <label> List name:
+                               disabled={this.props.inFlight}
+                               value={this.state.playlistId}
+                               onChange={(e) => this.handleChange(e, 'playlistId')}/> </label></div>
+                    <div><label style={{width: 200+'px'}}> List name
                         <input type="text"
-                            disabled={this.props.inFlight}
-                            value={this.state.name}
-                            onChange={(e) => this.handleChange(e, 'name')}/> </label>
-                    <label> Description:
+                               disabled={this.props.inFlight}
+                               value={this.state.name}
+                               onChange={(e) => this.handleChange(e, 'name')}/> </label></div>
+                    <div><label style={{width: 200+'px'}}> Description
                         <input type="text"
-                            disabled={this.props.inFlight}
-                            value={this.state.description}
-                            onChange={(e) => this.handleChange(e, 'description')}/> </label>
-                    <label> Tags: (split by comma)
+                               disabled={this.props.inFlight}
+                               value={this.state.description}
+                               onChange={(e) => this.handleChange(e, 'description')}/> </label></div>
+                    <div><label style={{width: 200+'px'}}> Tags (split by comma)
                         <input type="text"
-                            disabled={this.props.inFlight}
-                            value={this.state.tags}
-                            onChange={(e) => this.handleTagChange(e, 'tags')}/> </label>
+                               disabled={this.props.inFlight}
+                               value={this.state.tags}
+                               onChange={(e) => this.handleTagChange(e, 'tags')}/> </label></div>
+
                     <input type="submit" value="Submit" disabled={this.props.inFlight}/>
                 </form>
+                </Jumbotron>
+                {/*<InputGroup>*/}
+                {/*    <InputGroupAddon addonType={"prepend"} >*/}
+                {/*        <InputGroupText>Playlist</InputGroupText>*/}
+                {/*    </InputGroupAddon>*/}
+                {/*    <Input />*/}
+                {/*</InputGroup>*/}
+                {/*<InputGroup>*/}
+                {/*    <InputGroupAddon addonType={"prepend"}>*/}
+                {/*        <InputGroupText>Title</InputGroupText>*/}
+                {/*    </InputGroupAddon>*/}
+                {/*    <Input />*/}
+                {/*</InputGroup>*/}
+                {/*<InputGroup>*/}
+                {/*    <InputGroupAddon addonType={"prepend"}>*/}
+                {/*        <InputGroupText>Description</InputGroupText>*/}
+                {/*    </InputGroupAddon>*/}
+                {/*    <Input />*/}
+                {/*</InputGroup>*/}
+                {/*<InputGroup>*/}
+                {/*    <InputGroupAddon addonType={"prepend"}>*/}
+                {/*        <InputGroupText>Tags (split by comma)</InputGroupText>*/}
+                {/*    </InputGroupAddon>*/}
+                {/*    <Input />*/}
+                {/*</InputGroup>*/}
+                {/*<input type="submit" value="Submit" disabled={this.props.inFlight} onClick={(e) => this.handleSubmit(e)}/>*/}
             </div>
         );
     }

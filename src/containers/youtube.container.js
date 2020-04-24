@@ -6,10 +6,8 @@ import {Redirect} from "react-router";
 import {Link} from 'react-router-dom';
 import {checkLoggedIn, getUserByUsername} from '../actions/user.action';
 import {fetchPosts, postDetail} from '../actions/youtube.action';
-import Button from 'react-bootstrap/Button';
-import Jumbotron from 'react-bootstrap/Jumbotron';
-import Container from 'react-bootstrap/Container';
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
+import {Button, Jumbotron} from "react-bootstrap";
 
 class Youtube extends React.Component {
     constructor() {
@@ -26,10 +24,14 @@ class Youtube extends React.Component {
         this.props.postDetail(id);
     }
 
+    _jumpToAdd(url) {
+        this.props.history.push(url);
+    }
+
     _renderPostList() {
         const postRows = this.props.posts.map(post => (
             <tr key={post._id}>
-                <td><a href={post.playlistId}>{post.playlistId}</a></td>
+                <td>{post.playlistId}</td>
                 <td>{post.name}</td>
                 <td>{post.sharedUser}</td>
                 <td>{new Date(post.shareTime).toTimeString()}</td>
@@ -38,14 +40,15 @@ class Youtube extends React.Component {
             </tr>));
         return (
             <div>
+                <h2 align={"center"}>Post Ground</h2>
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>
-                        <th style={{width: "30%"}}>Playlist</th>
-                        <th style={{width: "15%"}}>ListName</th>
-                        <th style={{width: "15%"}}>Poster</th>
-                        <th style={{width: "25%"}}>Date</th>
-                        <th>Go to detail</th>
+                        <th>PlayList</th>
+                        <th>ListName</th>
+                        <th>Poster</th>
+                        <th>Date</th>
+                        <th>Detail</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -65,21 +68,15 @@ class Youtube extends React.Component {
         const status = this.props.routeState.state;
         var addButton = '';
         if (status === "LOGGEDIN") {
-            // addButton = <a type='button' href="/youtube/addpost">Add Post</a>
-            addButton = <Button block variant="primary" href="/youtube/addpost">New Post</Button>
+            addButton = (<Button color= {"primary"} onClick={() => this._jumpToAdd("/youtube/addpost")}>Add Post</Button>)
         } else if (status === "LOGGEDOUT") {
-            addButton = <h4>Plaease login to add a post</h4>
+            addButton = (<h4>Please login to add a post</h4>)
         }
         return (
             <div>
                 <Jumbotron>
-                    <Container>
-                        <h1 className="text-center">Explore Youtube Posts</h1>
-                        <br/>
-                        <h4>Here are the posts</h4>
-                        {addButton}
-                        {this._renderPostList()}
-                    </Container>
+                {addButton}
+                {this._renderPostList()}
                 </Jumbotron>
             </div>
         );
