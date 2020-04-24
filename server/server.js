@@ -8,7 +8,7 @@ const app = express();
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
-const mongoEndpoint = "mongodb://127.0.0.1/playlist_app";
+const mongoEndpoint = process.env.MONGODB_URI || "mongodb://127.0.0.1/playlist_app";
 
 mongoose.connect(mongoEndpoint, { useNewUrlParser: true });
 const db = mongoose.connection;
