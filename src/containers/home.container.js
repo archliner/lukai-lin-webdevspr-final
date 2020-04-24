@@ -5,6 +5,8 @@ import {withRouter} from "react-router";
 import {Link} from "react-router-dom";
 import {checkLoggedIn, getUserByUsername} from '../actions/user.action'
 import Carousel from "react-bootstrap/Carousel";
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Container from 'react-bootstrap/Container';
 
 class Home extends React.Component {
     constructor() {
@@ -18,49 +20,53 @@ class Home extends React.Component {
 
     render() {
         return (
-            <div align={"center"}>
-                <h1><b>Tube</b>List</h1>
-                <br/>
-                <p>Together. Share. Play.</p>
+            <div align={"center"} style={{ backgroundImage: `url(require("https://images.unsplash.com/photo-1543185377-99cd16011803?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"))` }}>
 
-                <Carousel>
-                    <Carousel.Item>
-                        <img
-                            className="d-block w-100"
-                            src="https://cdn.arstechnica.net/wp-content/uploads/2017/09/youtubemp3story-800x534.jpg"
-                            alt="First slide"
-                        />
-                        <Carousel.Caption>
-                            <h3>Search for millions of playlists on youtube</h3>
-                            <p></p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img
-                            className="d-block w-100"
-                            src="https://images.unsplash.com/photo-1543185377-99cd16011803?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
-                            alt="Third slide"
-                        />
+                <Jumbotron>
+                    <Container>
+                        <h1><b>Tube</b>List</h1>
+                        <br/>
+                        <p>Together. Share. Play.</p>
+                        {/* <Carousel>
+                            <Carousel.Item>
+                                <img
+                                    className="d-block w-100"
+                                    src="https://cdn.arstechnica.net/wp-content/uploads/2017/09/youtubemp3story-800x534.jpg"
+                                    alt="First slide"
+                                />
+                                <Carousel.Caption>
+                                    <h3>Search for millions of playlists on youtube</h3>
+                                    <p></p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img
+                                    className="d-block w-100"
+                                    src="https://images.unsplash.com/photo-1543185377-99cd16011803?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
+                                    alt="Third slide"
+                                />
 
-                        <Carousel.Caption>
-                            <h3>Watch them on youtube</h3>
-                            <p></p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img
-                            className="d-block w-100"
-                            src="https://images.unsplash.com/photo-1541877944-ac82a091518a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
-                            alt="Third slide"
-                        />
+                                <Carousel.Caption>
+                                    <h3>Watch them on youtube</h3>
+                                    <p></p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img
+                                    className="d-block w-100"
+                                    src="https://images.unsplash.com/photo-1541877944-ac82a091518a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
+                                    alt="Third slide"
+                                />
 
-                        <Carousel.Caption>
-                            <h3>Share with your friends</h3>
-                            <p></p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                </Carousel>
-                <p>Made by Lukai, Haoliang, Haowei with ❤️</p>
+                                <Carousel.Caption>
+                                    <h3>Share with your friends</h3>
+                                    <p></p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                        </Carousel> */}
+                        <p>Made by Lukai, Haoliang, Haowei with ❤️</p>
+                    </Container>
+                </Jumbotron>
 
             </div>
         );
