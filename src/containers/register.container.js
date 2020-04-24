@@ -73,6 +73,12 @@ class Register extends React.Component {
                                 <Form.Control type="password" placeholder="Validate Password" onChange={(e) => this.handleChange(e, 'validatePassword')}/>
                             </Form.Group>
                         </Form.Row>
+                        <Form.Row className="justify-content-md-center">
+                            <Form.Group as={Col} controlId="formGridPassword" xs lg="4">
+                                <Form.Label>Bio (Optional)</Form.Label>
+                                <Form.Control type="text" placeholder="Bio here" onChange={(e) => this.handleChange(e, 'bio')}/>
+                            </Form.Group>
+                        </Form.Row>
                         <br/>
                         <Form.Group as={Row} className="justify-content-md-center">
                             <Col xs lg="4" >
