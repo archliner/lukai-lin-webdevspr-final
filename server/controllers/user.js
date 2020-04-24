@@ -47,6 +47,7 @@ router.post("/admin", async (req, res) => {
   );
 });
 
+// log in
 router.post("/authenticate", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -101,12 +102,17 @@ router.put("/:username", async (req, res) => {
     if (req.body.unfollowing) {
       for(var i = followingPlaylists.length - 1; i >= 0; i--) {
         if(followingPlaylists[i] == req.body.unfollowing) {
-          console.log('start splice')
           followingPlaylists.splice(i, 1);
         }
       }
     }
     req.body.followingPlaylists = followingPlaylists;
+    // if (req.body.password) {
+    //   console.log('password in body: ' + req.body.password)
+    //   let password = req.body.password;
+    //   req.body.password = bcrypt.hashSync(password, 10);;
+    //   console.log('password efore: ' + req.body.password)
+    // }
     entry = await UserModel.findByIdAndUpdate(id, req.body).exec();
     res.status(200).send(entry);
   } catch (error) {
@@ -128,8 +134,9 @@ router.get("/:username/followinglists", async (req, res) => {
   }
 });
 
-router.get("/loggedIn", authParser, function (req, res) {
-  return res.status(200).json({username: req.username, isAdmin: req.isAdmin});
+router.get("/loggedIn", authParser, async function (req, res) {
+  const entry = await UserModel.findOne({ username: req.username }).exec();
+  return res.status(200).json({username: req.username, isAdmin: req.isAdmin, bio: entry.bio, password: entry.password});
 });
 
 router.post('/logout', logoutParser, function(req, res) {

@@ -142,6 +142,12 @@ export function clear() {
     }
 }
 
+export function updateProfileSuccess() {
+    return {
+        type: "UPDATE_PROFILE_SUCCESS"
+    }
+}
+
 export function login(user) {
     return function (dispatch) {
         dispatch(loginAttempt());
@@ -208,19 +214,12 @@ export function fetchFollowingPlaylists(username) {
     }
 }
 
-export function updateProfile(username, bio, pwd1, pwd2) {
-    return function (dispatch) {
-        if (pwd1 !== pwd2)
-            dispatch(updateProfileError("The passwords must match."));
-        else {
-            let newInfo = {};
-            if (bio)
-                newInfo.bio = bio;
-            if (pwd1)
-                newInfo.password = pwd1;
-            return Axios.put(`/api/user/${username}`, newInfo)
-                .then(response => dispatch(updateProfileSuccess()),
-                    error => dispatch(updateProfileError("An error occurred.")))
-        }
+export function updateProfile(username, update) {
+    return function(dispatch) {
+        return Axios.put(`/api/user/${username}`, update)
+            .then(response => dispatch(updateProfileSuccess(response.data)),
+                error => console.log('An error occurred.', error)
+            );
     }
 }
+
