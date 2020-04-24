@@ -123,6 +123,7 @@ class Profile extends React.Component {
                 <Jumbotron>
                     <Container>
                         <h1 className="text-center">My Profile</h1>
+                        <br />
                         {profile}
 
                     </Container>
