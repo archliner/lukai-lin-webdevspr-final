@@ -159,7 +159,7 @@ class PostDetail extends React.Component {
                 <td>{review.username}</td>
                 <td>{new Date(review.createTime).toTimeString()}</td>
                 <td>{new Date(review.editTime).toTimeString()}</td>
-                {editDeleteButton(review)}
+                {editDeleteButton(review) || 'N/A'}
             </tr>));
 
         return (
