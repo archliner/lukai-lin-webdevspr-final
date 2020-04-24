@@ -6,6 +6,10 @@ import {Redirect} from "react-router";
 import {Link} from 'react-router-dom';
 import {checkLoggedIn, getUserByUsername} from '../actions/user.action';
 import {fetchPosts, postDetail} from '../actions/youtube.action';
+import Button from 'react-bootstrap/Button';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Container from 'react-bootstrap/Container';
+import Table from 'react-bootstrap/Table';
 
 class Youtube extends React.Component {
     constructor() {
@@ -34,21 +38,20 @@ class Youtube extends React.Component {
             </tr>));
         return (
             <div>
-                <h2>Welcome To Post Ground!</h2>
-                <table>
+                <Table striped bordered hover responsive>
                     <thead>
                     <tr>
-                        <th>PlayList</th>
-                        <th>ListName</th>
-                        <th>Poster</th>
-                        <th>Date</th>
-                        {/* <th></th> */}
+                        <th style={{width: "30%"}}>Playlist</th>
+                        <th style={{width: "15%"}}>ListName</th>
+                        <th style={{width: "15%"}}>Poster</th>
+                        <th style={{width: "25%"}}>Date</th>
+                        <th>Go to detail</th>
                     </tr>
                     </thead>
                     <tbody>
                         {postRows}
                     </tbody>
-                </table>
+                </Table>
             </div>
         )
     }
@@ -62,16 +65,22 @@ class Youtube extends React.Component {
         const status = this.props.routeState.state;
         var addButton = '';
         if (status === "LOGGEDIN") {
-            addButton = <a type='button' href="/youtube/addpost">Add Post</a>
+            // addButton = <a type='button' href="/youtube/addpost">Add Post</a>
+            addButton = <Button block variant="primary" href="/youtube/addpost">New Post</Button>
         } else if (status === "LOGGEDOUT") {
             addButton = <h4>Plaease login to add a post</h4>
         }
         return (
             <div>
-                <h1>Youtube Page</h1>
-                {addButton}
-                {this._renderPostList()}
-
+                <Jumbotron>
+                    <Container>
+                        <h1 className="text-center">Explore Youtube Posts</h1>
+                        <br/>
+                        <h4>Here are the posts</h4>
+                        {addButton}
+                        {this._renderPostList()}
+                    </Container>
+                </Jumbotron>
             </div>
         );
     }
