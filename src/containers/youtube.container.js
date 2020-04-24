@@ -6,6 +6,7 @@ import {Redirect} from "react-router";
 import {Link} from 'react-router-dom';
 import {checkLoggedIn, getUserByUsername} from '../actions/user.action';
 import {fetchPosts, postDetail} from '../actions/youtube.action';
+import Table from "react-bootstrap/Table";
 
 class Youtube extends React.Component {
     constructor() {
@@ -25,7 +26,7 @@ class Youtube extends React.Component {
     _renderPostList() {
         const postRows = this.props.posts.map(post => (
             <tr key={post._id}>
-                <td><a href={post.playlistId}>{post.playlistId}</a></td>
+                <td>{post.playlistId}</td>
                 <td>{post.name}</td>
                 <td>{post.sharedUser}</td>
                 <td>{new Date(post.shareTime).toTimeString()}</td>
@@ -35,20 +36,20 @@ class Youtube extends React.Component {
         return (
             <div>
                 <h2>Welcome To Post Ground!</h2>
-                <table>
+                <Table striped bordered hover responsive>
                     <thead>
                     <tr>
                         <th>PlayList</th>
                         <th>ListName</th>
                         <th>Poster</th>
                         <th>Date</th>
-                        {/* <th></th> */}
+                        <th>Detail</th>
                     </tr>
                     </thead>
                     <tbody>
                         {postRows}
                     </tbody>
-                </table>
+                </Table>
             </div>
         )
     }
@@ -64,12 +65,12 @@ class Youtube extends React.Component {
         if (status === "LOGGEDIN") {
             addButton = <a type='button' href="/youtube/addpost">Add Post</a>
         } else if (status === "LOGGEDOUT") {
-            addButton = <h4>Plaease login to add a post</h4>
+            addButton = <h4>Please login to add a post</h4>
         }
         return (
             <div>
                 <h1>Youtube Page</h1>
-                {addButton}
+                <div align={"right"}>{addButton}</div>
                 {this._renderPostList()}
 
             </div>
