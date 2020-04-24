@@ -17,10 +17,13 @@ class Home extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Home Page</h1>
-                <Link to={'/profile'}>Profile</Link>&nbsp;
-                <Link to={'/youtube'}>Youtube</Link>
+            <div align={"center"}>
+                <h1><b>Tube</b>List</h1>
+                <br/>
+                <p>Together. Share. Play.</p>
+                <p>Made by Lukai, Haoliang, Haowei with ❤️</p>
+                {/*<Link to={'/profile'}>Profile</Link>&nbsp;*/}
+                {/*<Link to={'/youtube'}>Youtube</Link>*/}
 
             </div>
         );

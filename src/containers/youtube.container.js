@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom';
 import {checkLoggedIn, getUserByUsername} from '../actions/user.action';
 import {fetchPosts, postDetail} from '../actions/youtube.action';
 import Table from "react-bootstrap/Table";
+import {Button, Jumbotron} from "react-bootstrap";
 
 class Youtube extends React.Component {
     constructor() {
@@ -23,6 +24,10 @@ class Youtube extends React.Component {
         this.props.postDetail(id);
     }
 
+    _jumpToAdd(url) {
+        this.props.history.push(url);
+    }
+
     _renderPostList() {
         const postRows = this.props.posts.map(post => (
             <tr key={post._id}>
@@ -35,7 +40,7 @@ class Youtube extends React.Component {
             </tr>));
         return (
             <div>
-                <h2>Welcome To Post Ground!</h2>
+                <h2 align={"center"}>Post Ground</h2>
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>
@@ -63,16 +68,16 @@ class Youtube extends React.Component {
         const status = this.props.routeState.state;
         var addButton = '';
         if (status === "LOGGEDIN") {
-            addButton = <a type='button' href="/youtube/addpost">Add Post</a>
+            addButton = (<Button color= {"primary"} onClick={() => this._jumpToAdd("/youtube/addpost")}>Add Post</Button>)
         } else if (status === "LOGGEDOUT") {
-            addButton = <h4>Please login to add a post</h4>
+            addButton = (<h4>Please login to add a post</h4>)
         }
         return (
             <div>
-                <h1>Youtube Page</h1>
-                <div align={"right"}>{addButton}</div>
+                <Jumbotron>
+                {addButton}
                 {this._renderPostList()}
-
+                </Jumbotron>
             </div>
         );
     }

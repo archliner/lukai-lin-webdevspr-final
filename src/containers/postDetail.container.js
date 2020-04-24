@@ -6,6 +6,7 @@ import StarRatings from "react-star-ratings";
 import {checkLoggedIn, getUserByUsername, fetchFollowingPlaylists} from '../actions/user.action';
 import {postDetail, getReviewsByPlaylistId, addReview, 
     rediectToEdit, deleteReview, deletePost, followingPlaylist, unfollowPlaylist} from '../actions/youtube.action';
+import Table from "react-bootstrap/Table";
 
 class PostDetail extends React.Component {
     constructor() {
@@ -100,7 +101,7 @@ class PostDetail extends React.Component {
         }
 
         reviewRows = this.props.reviews.map(review => (
-            <tr key={review._id}>
+            <tr key={review._id} align={"center"}>
                 <td>{review.comment}</td>
                 <td>{review.rate}</td>
                 <td>{review.username}</td>
@@ -113,20 +114,21 @@ class PostDetail extends React.Component {
             <div>
                 <h2>Reviews</h2>
                 {this._addComment(user, post)}
-                <table>
+                <Table striped bordered hover responsive>
                     <thead>
-                    <tr>
+                    <tr align={"center"}>
                         <th>Comment</th>
                         <th>Rate</th>
                         <th>Reviewer</th>
-                        <th>CreateTime</th>
-                        <th>EditTime</th>
+                        <th>Create Time</th>
+                        <th>Edit Time</th>
+                        <th>Options</th>
                     </tr>
                     </thead>
                     <tbody>
                         {reviewRows}
                     </tbody>
-                </table>
+                </Table>
             </div>
         )
     }
@@ -162,7 +164,7 @@ class PostDetail extends React.Component {
                     <li>name: {post.name}</li>
                     <li>description: {post.description}</li>
                     <li>shared user: {post.sharedUser}</li>
-                    <li>share time: {post.shareTime}</li>
+                    <li>shared time: {post.shareTime}</li>
                 </ul>
             </div>
 
