@@ -106,6 +106,31 @@ export function selectUser(username) {
     }
 }
 
+export function displayProfile() {
+    return {
+        type: "SWITCH_TO_DISPLAY"
+    }
+}
+
+export function editProfile() {
+    return {
+        type: "SWITCH_TO_EDIT"
+    }
+}
+
+function updateProfileSuccess() {
+    return {
+        type: "UPDATE_PROFILE_SUCCESS"
+    }
+}
+
+function updateProfileError(error) {
+    return {
+        type: "UPDATE_PROFILE_ERROR",
+        error
+    }
+}
+
 export function validate(user) {
     return  {...user,
         type: 'VALIDATE_REGISTER_USER'}
@@ -197,3 +222,4 @@ export function updateProfile(username, update) {
             );
     }
 }
+
