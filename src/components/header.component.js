@@ -26,7 +26,7 @@ class Header extends React.Component {
         const loggedoutRoute = (
             <div>
                 <Navbar bg="light" variant="light">
-                    <Navbar.Brand href="/home">TubeList</Navbar.Brand>
+                    <Navbar.Brand href="/home"><b>Tube</b>List</Navbar.Brand>
                     <Nav className="mr-auto">
                         <Nav.Link href="/home">Home</Nav.Link>
                         {/*<Nav.Link href="/profile">Profile</Nav.Link>*/}

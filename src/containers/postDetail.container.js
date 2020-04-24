@@ -8,10 +8,10 @@ import {postDetail, getReviewsByPlaylistId, addReview,
     rediectToEdit, deleteReview, deletePost, followingPlaylist, unfollowPlaylist} from '../actions/youtube.action';
 import Table from "react-bootstrap/Table";
 import {Button, Jumbotron} from "react-bootstrap";
-import Form from 'react-bootstrap/Form';
+// import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Container from 'react-bootstrap/Container';
+import { Form, TextArea } from 'semantic-ui-react'
 
 class PostDetail extends React.Component {
     constructor() {
@@ -63,37 +63,48 @@ class PostDetail extends React.Component {
 
         return (
             <div>
-                <Form className="justify-content-md-center">
-                    <Form.Row className="justify-content-md-center">
-                        <Form.Group as={Col} controlId="formGridUsername" xs lg="4">
-                        <Form.Label></Form.Label>
-                        <Form.Control value={this.state.rate} type="text" placeholder="Enter Rate" onChange={(e) => this.handleChange(e, 'rate')}/>
-                        </Form.Group>
+                <StarRatings
+                    rating={this.state.rate}
+                    starRatedColor="red"
+                    changeRating={(newRating)=>this.setState({rate: newRating})}
+                    starDimension="20px"
+                    name="rating"
+                />
+                <br/>
+                {/*<Form>*/}
+                {/*    <Form.Row>*/}
+                {/*        /!*<Form.Group as={Col} controlId="formGridUsername" xs lg="4">*!/*/}
+                {/*        /!*<Form.Label></Form.Label>*!/*/}
+                {/*        /!*<Form.Control value={this.state.rate} type="text" placeholder="Enter Rate" onChange={(e) => this.handleChange(e, 'rate')}/>*!/*/}
+                {/*        /!*</Form.Group>*!/*/}
+                {/*        <Form.Group as={Col} controlId="formGridPassword" xs lg="4">*/}
+                {/*            <Form.Label></Form.Label>*/}
+                {/*            <Form.Control type="text" placeholder="Enter Comment" onChange={(e) => this.handleChange(e, 'comment')}/>*/}
+                {/*        </Form.Group>*/}
 
-                        <StarRatings
-                            rating={this.state.rate}
-                            starRatedColor="red"
-                            changeRating={(newRating)=>this.setState({rate: newRating})}
-                            starDimension="20px"
-                            name="rating"
+                {/*        <Form.Group as={Row}>*/}
+                {/*        <Col xs lg="4" >*/}
+                {/*            <Button onClick={() => this._handleAddComment(post)} variant="primary" disabled={this.props.inFlight}>*/}
+                {/*                Add*/}
+                {/*            </Button>*/}
+                {/*        </Col>*/}
+                {/*    </Form.Group>*/}
+                {/*    </Form.Row>*/}
+                {/*    <br/>*/}
+                {/*</Form>*/}
+                <form>
+                    {/* {error} */}
+                    <div>
+                        <textarea
+                            style={{width: 50+"%", height: 100+"px"}}
+                            disabled={this.props.inFlight}
+                            value={this.state.comment}
+                            onChange={(e) => this.handleChange(e, 'comment')}
+                            placeholder={"Say something about this post"}
                         />
-                        <Form.Group as={Col} controlId="formGridPassword" xs lg="4">
-                            <Form.Label></Form.Label>
-                            <Form.Control type="text" placeholder="Enter Comment" onChange={(e) => this.handleChange(e, 'comment')}/>
-                        </Form.Group>
-
-                        <Form.Group as={Row} className="justify-content-md-center">
-                        <Col xs lg="4" >
-                            <Button onClick={() => this._handleAddComment(post)} variant="primary" disabled={this.props.inFlight}>
-                                Add
-                            </Button>
-                        </Col>
-                    </Form.Group>
-                    </Form.Row>
-                    <br/>
-
-                </Form>
-
+                    </div>
+                    <Button onClick={() => this._handleAddComment(post)} disabled={this.props.inFlight}>Submit</Button>
+                </form>
                 {/* <form>
                     <label> Rate:
                         <input type="text"
