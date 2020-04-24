@@ -41,7 +41,7 @@ class Search extends React.Component {
         imgUrl = thumbnails.default.url;
       } else
         imgUrl = "https://upload.wikimedia.org/wikipedia/commons/e/e1/YouTube_play_buttom_icon_%282013-2017%29.svg";
-      return <img src={imgUrl}/>
+      return <img src={imgUrl} width={120} height={90}/>
     }
 
     _renderBookList() {
@@ -51,20 +51,25 @@ class Search extends React.Component {
         
         const youtubeSearchRows = this.props.searchList.playList.map((playlist) => (
             <tr key={playlist.id.playlistId}>
-              <td>{this._getThumbnail(playlist.snippet.thumbnails)}</td>
-                <td align={"middle"}>{playlist.snippet.title}</td>
-                <td><a href={"https://www.youtube.com/playlist?list=" + playlist.id.playlistId}>{playlist.snippet.title}</a></td>
-                <td><input type="button" value="Post this" onClick={() => this.handlePostClick("https://www.youtube.com/playlist?list=" + playlist.id.playlistId)}/></td>
+              <td align={"center"}>{this._getThumbnail(playlist.snippet.thumbnails)}</td>
+                {/*<td align={"middle"}>{playlist.snippet.title}</td>*/}
+                <td align={"center"}><a href={"https://www.youtube.com/playlist?list=" + playlist.id.playlistId}>{playlist.snippet.title}</a></td>
+                <td>{playlist.snippet.description}</td>
+                {/* <td align={"center"}><input type="button" value="Post this" onClick={() => this.handlePostClick("https://www.youtube.com/playlist?list=" + playlist.id.playlistId)}/></td> */}
+                <Button onClick={() => this.handlePostClick("https://www.youtube.com/playlist?list=" + playlist.id.playlistId)} variant="primary">
+                    Post This Playlist
+                </Button>
             </tr>
             ));
         
         return (
             <Table striped bordered hover responsive>
                 <thead>
-                <tr>
-                    <th style={{width: "40%"}}>Playlist</th>
-                    <th style={{width: "28%"}}>Title</th>
-                    <th style={{width: "15%"}}>Playlist Link</th>
+                <tr align={"center"}>
+                    <th style={{width: "15%"}}>Playlist</th>
+                    {/*<th style={{width: "28%"}}>Title</th>*/}
+                    <th style={{width: "34%"}}>Title</th>
+                    <th style={{width: "34%"}}>Description</th>
                     <th style={{width: "17%"}}>Post</th>
                 </tr>
                 </thead>
@@ -97,12 +102,12 @@ class Search extends React.Component {
             <div>
                 <Jumbotron>
                     <Container>
-                        <h3 className="text-center">Search Youtube</h3>
+                        <h3 className="text-center">Search Youtube Playlists</h3>
                         <Form className="justify-content-md-center">
                             <Form.Row className="justify-content-md-center">
                                 <Form.Group as={Col} controlId="formGridKeyword" xs lg="4">
                                     <Form.Label></Form.Label>
-                                    <Form.Control type="text" placeholder="Enter keyword" onChange={(e) => this.handleChange(e, 'keyword')}/>
+                                    <Form.Control type="text" placeholder="Enter a keyword" onChange={(e) => this.handleChange(e, 'keyword')}/>
                                 </Form.Group>
                             </Form.Row>
                             <br/>
