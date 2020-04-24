@@ -59,7 +59,7 @@ class AddPost extends React.Component {
                             <Form.Row className="justify-content-md-center">
                                 <Form.Group as={Col} controlId="formGridUsername" xs lg="4">
                                 <Form.Label>Playlist</Form.Label>
-                                <Form.Control value={this.state.playlistId} type="text" placeholder="Enter playlist url" onChange={(e) => this.handleChange(e, 'playlistId')}/>
+                                <Form.Control value={this.state.playlistId} type="text" placeholder="Playlist url here..." onChange={(e) => this.handleChange(e, 'playlistId')}/>
                                 </Form.Group>
                             </Form.Row>
                             <Form.Row className="justify-content-md-center">
@@ -73,7 +73,7 @@ class AddPost extends React.Component {
                             <Form.Row className="justify-content-md-center">
                                 <Form.Group as={Col} controlId="formGridPassword" xs lg="4">
                                     <Form.Label>Description</Form.Label>
-                                    <Form.Control type="text" placeholder="List name here..." rows="3" onChange={(e) => this.handleChange(e, 'description')} />
+                                    <Form.Control type="text" placeholder="Description here..." rows="3" onChange={(e) => this.handleChange(e, 'description')} />
                                     {/* <Form.Control type="text" placeholder="Comment" onChange={(e) => this.handleChange(e, 'comment')}/> */}
                                 </Form.Group>
                             </Form.Row>
