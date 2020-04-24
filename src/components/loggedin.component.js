@@ -1,5 +1,6 @@
 import Axios from "axios";
 import React from 'react';
+import {Spinner} from "react-bootstrap";
 
 export default function (RedirectComponent) {
     return class extends React.Component {
@@ -30,7 +31,7 @@ export default function (RedirectComponent) {
         render() {
             const {loading} = this.state;
             if (loading) {
-                return (<h4>Loading...</h4>);
+                return (<div align={"center"}><Spinner animation={"border"} variant={"primary"}/><p>Loading...</p></div>);
             }
             // if (redirect) {
             //     return (<Redirect to="/home"/>);

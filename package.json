@@ -43,5 +43,8 @@
     "server": "node server/server.js",
     "devserver": "node-env-run server/server.js --exec nodemon",
     "dev": "run-p devserver devreact"
+  },
+  "devDependencies": {
+    "semantic-ui-react": "^0.88.2"
   }
 }

@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {withRouter} from "react-router";
 import {Link} from "react-router-dom";
 import {checkLoggedIn, getUserByUsername} from '../actions/user.action'
+import Carousel from "react-bootstrap/Carousel";
+import {Badge, Jumbotron} from "react-bootstrap";
 
 class Home extends React.Component {
     constructor() {
@@ -20,10 +22,17 @@ class Home extends React.Component {
             <div align={"center"}>
                 <h1><b>Tube</b>List</h1>
                 <br/>
-                <p>Together. Share. Play.</p>
+                <Jumbotron>
+                    <p>TubeList is where you can search for millions of playlists on youtube and share
+                       your views with friends.
+                    </p>
+                    <p>
+                        Follow some favorite playlists, watch them on youtube
+                        and write your reviews.
+                    </p>
+                </Jumbotron>
+
                 <p>Made by Lukai, Haoliang, Haowei with ❤️</p>
-                {/*<Link to={'/profile'}>Profile</Link>&nbsp;*/}
-                {/*<Link to={'/youtube'}>Youtube</Link>*/}
 
             </div>
         );
