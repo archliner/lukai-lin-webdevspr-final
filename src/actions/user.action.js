@@ -117,6 +117,12 @@ export function clear() {
     }
 }
 
+export function updateProfileSuccess() {
+    return {
+        type: "UPDATE_PROFILE_SUCCESS"
+    }
+}
+
 export function login(user) {
     return function (dispatch) {
         dispatch(loginAttempt());
@@ -178,6 +184,15 @@ export function fetchFollowingPlaylists(username) {
     return function(dispatch) {
         return Axios.get(`/api/user/${username}/followinglists`)
             .then(response => dispatch(getPlaylistSuccess(response.data)),
+                error => console.log('An error occurred.', error)
+            );
+    }
+}
+
+export function updateProfile(username, update) {
+    return function(dispatch) {
+        return Axios.put(`/api/user/${username}`, update)
+            .then(response => dispatch(updateProfileSuccess(response.data)),
                 error => console.log('An error occurred.', error)
             );
     }

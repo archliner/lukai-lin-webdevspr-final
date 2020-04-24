@@ -89,6 +89,9 @@ function redirect(state = '', action) {
     if (action.type === 'LOGOUT_SUCCESS') {
         return '/home'
     }
+    if (action.type === 'UPDATE_PROFILE_SUCCESS') {
+        return '/profile'
+    }
     return '';
 }
 
