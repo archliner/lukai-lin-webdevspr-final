@@ -17,14 +17,18 @@ const session = require("express-session");
 
 const MongoStore = require("connect-mongo")(session);
 
-app.use(
-  session({
-    secret: process.env.SUPER_SECRET,
+// app.use(
+//   session({
+//     secret: process.env.SUPER_SECRET,
+//     store: new MongoStore({
+//       mongooseConnection: db,
+//     }),
+//   })
+// );
+app.use(session({secret: 'my_secret_ssshhhhh_1234567890',
     store: new MongoStore({
-      mongooseConnection: db,
-    }),
-  })
-);
+        mongooseConnection : db,
+    })}));
 // This will create the connection, and throw an error if it doesn't work
 db.on("error", console.error.bind(console, "Error connecting to MongoDB:"));
 
