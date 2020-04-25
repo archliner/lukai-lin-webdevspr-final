@@ -24,6 +24,9 @@ router.post("/", async (req, res) => {
       },
       (error) => res.status(500).send(error)
     );
+    // await UserModel.create(req.body).exec();
+    // req.session.username = username;
+    // return res.status(200).send(username);
   } catch (error) {
     res.status(404).send(error)
   }

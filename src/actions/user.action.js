@@ -170,7 +170,8 @@ export function register(username, password, bio) {
                 dispatch(registerSuccess(response.data.username))
                 dispatch(selectUser(response.data.username))
                 },
-                error => dispatch(registerFailure(error.response.data.message))
+                // error => dispatch(registerFailure(error.response.data.message))
+                error => console.log('register error')
             );
     }
 }
